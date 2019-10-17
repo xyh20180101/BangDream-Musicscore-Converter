@@ -1,0 +1,14 @@
+C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\bin\Debug\BangDreamMusicscoreConverter.exe.config
+C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\bin\Debug\BangDreamMusicscoreConverter.exe
+C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\bin\Debug\BangDreamMusicscoreConverter.pdb
+C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.csprojAssemblyReference.cache
+C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\App.g.cs
+C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter_MarkupCompile.cache
+C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter_MarkupCompile.lref
+C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.g.resources
+C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.Properties.Resources.resources
+C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.csproj.GenerateResource.cache
+C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.exe
+C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.pdb
+C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\View\MainWindow.g.cs
+C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\View\MainWindow.baml
