@@ -12,3 +12,17 @@ C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreCon
 C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.pdb
 C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\View\MainWindow.g.cs
 C:\Users\kasumi\source\repos\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\View\MainWindow.baml
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\bin\Debug\BangDreamMusicscoreConverter.exe.config
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\bin\Debug\BangDreamMusicscoreConverter.exe
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\bin\Debug\BangDreamMusicscoreConverter.pdb
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.csprojAssemblyReference.cache
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\App.g.cs
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter_MarkupCompile.cache
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.g.resources
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.Properties.Resources.resources
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.csproj.GenerateResource.cache
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.csproj.CoreCompileInputs.cache
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.exe
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.pdb
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\Controller\MainWindow.baml
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\Controller\MainWindow.g.cs
