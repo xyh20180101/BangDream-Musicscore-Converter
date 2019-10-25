@@ -14,7 +14,9 @@
 <br/>
 
 已知的问题：
+
 从BanG! simulator chart_downloader下载的邦邦官谱转换后会乱掉，体现在滑条的头尾不一致（我不知道simulator的long note应该如何处理_(:з」∠)_
+
 而通过BanG!Craft制作的自制谱面导出为simulator谱面则没有发现这个问题
 <br/>
 <br/>
