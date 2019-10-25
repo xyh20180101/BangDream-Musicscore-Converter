@@ -17,8 +17,8 @@
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button x:Name="OpenButton" Grid.Column="0" Grid.Row="0" Content="Open" Click="OpenButton_Click"></Button>
-            <TextBox x:Name="SourceTextBox" Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Visible" PreviewDragOver="SourceTextBox_PreviewDragOver" PreviewDrop="SourceTextBox_PreviewDrop"></TextBox>
-            <TextBox x:Name="ResultTextBox" Grid.Column="2" Grid.Row="1" VerticalScrollBarVisibility="Visible"></TextBox>
+            <TextBox x:Name="SourceTextBox" Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Visible" PreviewDragOver="SourceTextBox_PreviewDragOver" PreviewDrop="SourceTextBox_PreviewDrop" AcceptsReturn="True"></TextBox>
+            <TextBox x:Name="ResultTextBox" Grid.Column="2" Grid.Row="1" VerticalScrollBarVisibility="Visible" AcceptsReturn="True"></TextBox>
             <Grid Grid.Column="1" Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="6*"></RowDefinition>
@@ -32,13 +32,14 @@
                     <ColumnDefinition Width="8*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <ComboBox Grid.Column="1" Grid.Row="1">
-                    <ComboBoxItem Content="bestdori制谱器"/>
-                    <ComboBoxItem Content="bangbangboom制谱器"/>
-                    <ComboBoxItem Content="bangCraft制谱器"/>
-                    <ComboBoxItem Content="bangSimulator播放器"/>
+                <ComboBox x:Name="ConvertTypeSelector" Grid.Column="1" Grid.Row="1" SelectedIndex="0">
+                    <ComboBoxItem Content="(测试)" TabIndex="0"/>
+                    <ComboBoxItem Content="bestdori制谱器" TabIndex="1"/>
+                    <ComboBoxItem Content="bangbangboom制谱器" TabIndex="2"/>
+                    <ComboBoxItem Content="bangCraft制谱器" TabIndex="3"/>
+                    <ComboBoxItem Content="bangSimulator播放器" TabIndex="4"/>
                 </ComboBox>
-                <Button Grid.Column="1" Grid.Row="3" Content="Convert"></Button>
+                <Button x:Name="ConvertButton" Grid.Column="1" Grid.Row="3" Content="Convert" Click="ConvertButton_Click"></Button>
             </Grid>
             <Grid Grid.Column="2" Grid.Row="0">
                 <Grid.RowDefinitions>
@@ -48,8 +49,8 @@
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" Grid.Row="0" Content="Save"></Button>
-                <Button Grid.Column="0" Grid.Row="0" Content="Copy"></Button>
+                <Button x:Name="SaveButton" Grid.Column="1" Grid.Row="0" Content="Save" Click="SaveButton_Click"></Button>
+                <Button x:Name="CopyButton" Grid.Column="0" Grid.Row="0" Content="Copy" Click="CopyButton_Click"></Button>
             </Grid>
         </Grid>
     </Grid>

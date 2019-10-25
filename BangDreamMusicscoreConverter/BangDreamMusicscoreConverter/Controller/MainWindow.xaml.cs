@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using BangDreamMusicscoreConverter.DataClass.Convert;
 using BangDreamMusicscoreConverter.Model;
 
 namespace BangDreamMusicscoreConverter
@@ -11,6 +12,7 @@ namespace BangDreamMusicscoreConverter
     {
         readonly UIBusiness uiBusiness = new UIBusiness();
         readonly IOBusiness ioBusiness = new IOBusiness();
+        readonly DataBusiness dataBusiness = new DataBusiness();
 
         /// <summary>
         /// 初始化
@@ -48,6 +50,7 @@ namespace BangDreamMusicscoreConverter
         private void SourceTextBox_PreviewDragOver(object sender, DragEventArgs e)
         {
             e.Effects = DragDropEffects.Copy;
+            //只允许拖拽单个文件
             if (((string[])e.Data.GetData(DataFormats.FileDrop)).Length != 1)
             {
                 e.Handled = false;
@@ -75,6 +78,40 @@ namespace BangDreamMusicscoreConverter
                 return;
             }
             uiBusiness.ShowText(SourceTextBox, musicScore);
+        }
+
+        /// <summary>
+        /// 转换按钮_点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ConvertButton_Click(object sender, RoutedEventArgs e)
+        {
+            var scoreString = uiBusiness.GetText(SourceTextBox);
+            var defaultScore = dataBusiness.GetDefaultScoreFromString(scoreString);
+
+            uiBusiness.ShowText(ResultTextBox, defaultScore.ToString((ConvertType)ConvertTypeSelector.SelectedIndex));
+        }
+
+        /// <summary>
+        /// 复制按钮_点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CopyButton_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(uiBusiness.GetText(ResultTextBox));
+        }
+
+        /// <summary>
+        /// 保存按钮_点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            var filePath = uiBusiness.SaveFileDialogWindow();
+            ioBusiness.SaveTextToPath(filePath, uiBusiness.GetText(ResultTextBox));
         }
     }
 }

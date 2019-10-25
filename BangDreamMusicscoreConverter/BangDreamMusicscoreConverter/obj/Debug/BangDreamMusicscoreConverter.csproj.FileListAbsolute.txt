@@ -26,3 +26,6 @@ D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDream
 D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.pdb
 D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\Controller\MainWindow.baml
 D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\Controller\MainWindow.g.cs
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\bin\Debug\Newtonsoft.Json.dll
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\bin\Debug\Newtonsoft.Json.xml
+D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.csproj.CopyComplete

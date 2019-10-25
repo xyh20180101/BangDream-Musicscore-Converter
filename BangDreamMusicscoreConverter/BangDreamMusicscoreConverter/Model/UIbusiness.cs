@@ -24,13 +24,41 @@ namespace BangDreamMusicscoreConverter.Model
         }
 
         /// <summary>
+        /// 打开文件保存窗口，返回保存文件的路径
+        /// </summary>
+        /// <returns></returns>
+        public string SaveFileDialogWindow()
+        {
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "文本文件(*.txt)|*.txt",
+                FileName = "mysorce"
+            };
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                return saveFileDialog.FileName;
+            }
+            return "";
+        }
+
+        /// <summary>
+        /// 从文本框获取文本
+        /// </summary>
+        /// <param name="textBox">目标文本框</param>
+        /// <returns></returns>
+        public string GetText(TextBox textBox)
+        {
+            return textBox.Text;
+        }
+
+        /// <summary>
         /// 显示文本到文本框
         /// </summary>
-        /// <param name="textbox">目标文本框</param>
+        /// <param name="textBox">目标文本框</param>
         /// <param name="text">文本内容</param>
-        public void ShowText(TextBox textbox,string text)
+        public void ShowText(TextBox textBox,string text)
         {
-            textbox.Text = text;
+            textBox.Text = text;
         }
     }
 }
