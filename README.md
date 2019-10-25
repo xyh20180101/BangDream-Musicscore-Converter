@@ -1,5 +1,7 @@
 # BangDream-Musicscore-Converter
 邦邦谱面转换器
+
+运行需要.NET Framework 4.7.2
 <br/>
 <br/>
 <br/>
