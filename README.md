@@ -1,7 +1,7 @@
 # BangDream-Musicscore-Converter
 邦邦谱面转换器
 
-[下载](/releases)
+[下载](https://github.com/xyh20180101/BangDream-Musicscore-Converter/releases)
 <br/>
 <br/>
 
