@@ -7,7 +7,7 @@ namespace BangDreamMusicscoreConverter.Model
     public class IOBusiness
     {
         /// <summary>
-        /// 返回路径文件中的内容(字符串)
+        ///     返回路径文件中的内容(字符串)
         /// </summary>
         /// <param name="filePath">文件路径</param>
         /// <returns></returns>
@@ -20,17 +20,17 @@ namespace BangDreamMusicscoreConverter.Model
         }
 
         /// <summary>
-        /// 保存文本到文件
+        ///     保存文本到文件
         /// </summary>
         /// <param name="filePath">文件路径</param>
         /// <param name="text">文本</param>
-        public void SaveTextToPath(string filePath,string text)
+        public void SaveTextToPath(string filePath, string text)
         {
             try
             {
                 File.WriteAllText(filePath, text);
             }
-            catch(Exception)
+            catch (Exception)
             {
             }
         }

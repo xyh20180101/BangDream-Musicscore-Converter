@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Windows;
-using BangDreamMusicscoreConverter.DataClass.Convert;
+using BangDreamMusicscoreConverter.DataClass;
 using BangDreamMusicscoreConverter.Model;
 
 namespace BangDreamMusicscoreConverter
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    ///     MainWindow.xaml 的交互逻辑
     /// </summary>
     public partial class MainWindow : Window
     {
-        readonly UIBusiness uiBusiness = new UIBusiness();
-        readonly IOBusiness ioBusiness = new IOBusiness();
-        readonly DataBusiness dataBusiness = new DataBusiness();
+        private readonly DataBusiness dataBusiness = new DataBusiness();
+        private readonly IOBusiness ioBusiness = new IOBusiness();
+        private readonly UIBusiness uiBusiness = new UIBusiness();
 
         /// <summary>
-        /// 初始化
+        ///     初始化
         /// </summary>
         public MainWindow()
         {
@@ -23,7 +23,7 @@ namespace BangDreamMusicscoreConverter
         }
 
         /// <summary>
-        /// 打开按钮_点击事件
+        ///     打开按钮_点击事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -39,11 +39,12 @@ namespace BangDreamMusicscoreConverter
             {
                 return;
             }
+
             uiBusiness.ShowText(SourceTextBox, musicScore);
         }
 
         /// <summary>
-        /// 原谱面文本框_拖拽悬浮事件
+        ///     原谱面文本框_拖拽悬浮事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -51,50 +52,52 @@ namespace BangDreamMusicscoreConverter
         {
             e.Effects = DragDropEffects.Copy;
             //只允许拖拽单个文件
-            if (((string[])e.Data.GetData(DataFormats.FileDrop)).Length != 1)
+            if (((string[]) e.Data.GetData(DataFormats.FileDrop)).Length != 1)
             {
                 e.Handled = false;
                 return;
             }
+
             e.Handled = true;
         }
 
         /// <summary>
-        /// 原谱面文本框_拖拽结束事件
+        ///     原谱面文本框_拖拽结束事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SourceTextBox_PreviewDrop(object sender, DragEventArgs e)
         {
-
             string musicScore;
             try
             {
-                var filePath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+                var filePath = ((string[]) e.Data.GetData(DataFormats.FileDrop))[0];
                 musicScore = ioBusiness.GetTextFromPath(filePath);
             }
             catch (Exception)
             {
                 return;
             }
+
             uiBusiness.ShowText(SourceTextBox, musicScore);
         }
 
         /// <summary>
-        /// 转换按钮_点击事件
+        ///     转换按钮_点击事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ConvertButton_Click(object sender, RoutedEventArgs e)
         {
             var scoreString = uiBusiness.GetText(SourceTextBox);
-            var defaultScore = dataBusiness.GetDefaultScoreFromString(scoreString);
-
-            uiBusiness.ShowText(ResultTextBox, defaultScore.ToString((ConvertType)ConvertTypeSelector.SelectedIndex));
+            var defaultScore =
+                dataBusiness.GetDefaultScore(scoreString, (ConvertTypeFrom) ConvertTypeFromSelector.SelectedIndex);
+            uiBusiness.ShowText(ResultTextBox,
+                defaultScore.ToString((ConvertTypeTo) ConvertTypeToSelector.SelectedIndex));
         }
 
         /// <summary>
-        /// 复制按钮_点击事件
+        ///     复制按钮_点击事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -104,7 +107,7 @@ namespace BangDreamMusicscoreConverter
         }
 
         /// <summary>
-        /// 保存按钮_点击事件
+        ///     保存按钮_点击事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

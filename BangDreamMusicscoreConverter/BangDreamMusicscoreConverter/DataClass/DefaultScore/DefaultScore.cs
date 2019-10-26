@@ -1,51 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
-using BangDreamMusicscoreConverter.DataClass.Convert;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using BangDreamMusicscoreConverter.DataClass.Bestdori;
 using Newtonsoft.Json;
 
 namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 {
     /// <summary>
-    /// 默认谱面类
+    ///     默认谱面类
     /// </summary>
     public class DefaultScore
     {
         /// <summary>
-        /// 延迟时间(单位:毫秒)
+        ///     延迟时间(单位:毫秒)
         /// </summary>
         public int Delay_ms { get; set; }
 
         /// <summary>
-        /// 每分钟节拍数
+        ///     每分钟节拍数
         /// </summary>
         public float Bpm { get; set; }
 
         /// <summary>
-        /// 谱面数据
+        ///     谱面数据
         /// </summary>
         public List<Note> Notes { get; set; }
 
         /// <summary>
-        /// 输出对应格式的谱面文本
+        ///     输出对应格式的谱面文本
         /// </summary>
-        /// <param name="convertType"></param>
+        /// <param name="convertTypeTo"></param>
         /// <returns></returns>
-        public string ToString(ConvertType convertType)
+        public string ToString(ConvertTypeTo convertTypeTo)
         {
-            switch (convertType)
+            try
             {
-                case ConvertType.defaultScore: return ToDefaultScore();
-                case ConvertType.bestdori: return ToBestdoriScore();
-                default: break;
+                switch (convertTypeTo)
+                {
+                    case ConvertTypeTo.bestdori: return ToBestdoriScore();
+                    case ConvertTypeTo.bangSimulator: return ToDefaultScore();
+                }
             }
-            return base.ToString();
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+
+            return "";
         }
 
         #region 各谱面格式输出方法
 
         /// <summary>
-        /// 输出为默认格式
+        ///     输出为默认格式
         /// </summary>
         /// <returns></returns>
         private string ToDefaultScore()
@@ -54,21 +63,18 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
             str += $"{Delay_ms}{Environment.NewLine}";
             str += $"{Bpm}{Environment.NewLine}";
             str += $"0/0/0{Environment.NewLine}";
-            foreach (var note in Notes)
-            {
-                str += $"{note.Time}/{(int)note.NoteType}/{note.Track}{Environment.NewLine}";
-            }
-            return str;
+            return Notes.Aggregate(str,
+                (current, note) => current + $"{note.Time}/{(int) note.NoteType}/{note.Track}{Environment.NewLine}");
         }
 
         /// <summary>
-        /// 输出为bestdori制谱器格式
+        ///     输出为bestdori制谱器格式
         /// </summary>
         /// <returns></returns>
         private string ToBestdoriScore()
         {
             var score = new ArrayList();
-            var head = new Bestdori.Head
+            var head = new Head
             {
                 beat = Delay_ms / 60000 * Bpm,
                 bpm = Bpm
@@ -111,7 +117,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                             lane = note.Track,
                             beat = note.Time,
                             note = Bestdori.NoteType.Slide,
-                            pos = Bestdori.PosType.A,
+                            pos = PosType.A,
                             start = true
                         };
                         break;
@@ -121,7 +127,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                             lane = note.Track,
                             beat = note.Time,
                             note = Bestdori.NoteType.Slide,
-                            pos = Bestdori.PosType.A
+                            pos = PosType.A
                         };
                         break;
                     case NoteType.滑条a_结束:
@@ -130,7 +136,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                             lane = note.Track,
                             beat = note.Time,
                             note = Bestdori.NoteType.Slide,
-                            pos = Bestdori.PosType.A,
+                            pos = PosType.A,
                             end = true
                         };
                         break;
@@ -141,7 +147,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                             lane = note.Track,
                             beat = note.Time,
                             note = Bestdori.NoteType.Slide,
-                            pos = Bestdori.PosType.B,
+                            pos = PosType.B,
                             start = true
                         };
                         break;
@@ -151,7 +157,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                             lane = note.Track,
                             beat = note.Time,
                             note = Bestdori.NoteType.Slide,
-                            pos = Bestdori.PosType.B
+                            pos = PosType.B
                         };
                         break;
                     case NoteType.长键_结束:
@@ -161,7 +167,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                             lane = note.Track,
                             beat = note.Time,
                             note = Bestdori.NoteType.Slide,
-                            pos = Bestdori.PosType.B,
+                            pos = PosType.B,
                             end = true
                         };
                         break;
@@ -171,7 +177,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                             lane = note.Track,
                             beat = note.Time,
                             note = Bestdori.NoteType.Slide,
-                            pos = Bestdori.PosType.A,
+                            pos = PosType.A,
                             end = true,
                             flick = true
                         };
@@ -183,7 +189,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                             lane = note.Track,
                             beat = note.Time,
                             note = Bestdori.NoteType.Slide,
-                            pos = Bestdori.PosType.B,
+                            pos = PosType.B,
                             end = true,
                             flick = true
                         };
@@ -191,13 +197,16 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                     case NoteType.改变bpm:
                         break;
                 }
+
                 score.Add(tempNote);
             }
+
             return JsonConvert.SerializeObject(score, new JsonSerializerSettings
             {
                 DefaultValueHandling = DefaultValueHandling.Ignore
             });
         }
+
         #endregion
     }
 }

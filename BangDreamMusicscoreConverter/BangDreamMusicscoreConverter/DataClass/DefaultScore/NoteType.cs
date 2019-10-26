@@ -1,7 +1,7 @@
 ﻿namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 {
     /// <summary>
-    /// 音符类型枚举
+    ///     音符类型枚举
     /// </summary>
     public enum NoteType
     {
