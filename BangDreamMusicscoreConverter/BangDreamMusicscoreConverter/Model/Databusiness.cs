@@ -23,6 +23,7 @@ namespace BangDreamMusicscoreConverter.Model
                 {
                     case ConvertTypeFrom.bestdori: return GetDefaultScoreFromBestdoriScore(scoreString);
                     case ConvertTypeFrom.bangSimulator: return GetDefaultScoreFromBangSimulatorScore(scoreString);
+                    case ConvertTypeFrom.bangbangboom: return GetDefaultScoreFromBangbangboomScore(scoreString);
                 }
             }
             catch (Exception e)
@@ -69,8 +70,7 @@ namespace BangDreamMusicscoreConverter.Model
             }
 
             //先按时间排，然后按轨道从左到右排
-            notes = notes.OrderBy(p => p.Time).ThenBy(p => p.Track).ToList();
-            defaultScore.Notes = notes;
+            defaultScore.Notes = notes.OrderBy(p => p.Time).ThenBy(p => p.Track).ToList();
             return defaultScore;
         }
 
@@ -218,7 +218,8 @@ namespace BangDreamMusicscoreConverter.Model
                 throw new Exception("bestdori=>bangSimulator音符转换失败");
             }
 
-            defaultScore.Notes = notes;
+            //先按时间排，然后按轨道从左到右排
+            defaultScore.Notes = notes.OrderBy(p => p.Time).ThenBy(p => p.Track).ToList();
             return defaultScore;
         }
 
@@ -229,6 +230,108 @@ namespace BangDreamMusicscoreConverter.Model
         public DefaultScore GetDefaultScoreFromBangbangboomScore(string scoreString)
         {
             var defaultScore = new DefaultScore();
+            var noteArray = scoreString.Split("\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var head = noteArray[0].Split('|');
+            defaultScore.Delay_ms = (int) (double.Parse(head[1]) * 1000);
+            defaultScore.Bpm = float.Parse(head[2]);
+
+            var notes = new List<Note>();
+            var isA = true;
+            for (var i = 1; i < noteArray.Length; i++)
+            {
+                var noteInfo = noteArray[i].Split('|');
+                //白键
+                if (noteInfo[0] == "s")
+                {
+                    var noteTimeAndTrack = noteInfo[1].Split(':');
+                    notes.Add(new Note
+                    {
+                        NoteType = NoteType.白键,
+                        Time = double.Parse(noteTimeAndTrack[0]) / 24,
+                        Track = int.Parse(noteTimeAndTrack[1]) + 1
+                    });
+                    continue;
+                }
+
+                //粉键
+                if (noteInfo[0] == "f")
+                {
+                    var noteTimeAndTrack = noteInfo[1].Split(':');
+                    notes.Add(new Note
+                    {
+                        NoteType = NoteType.粉键,
+                        Time = double.Parse(noteTimeAndTrack[0]) / 24,
+                        Track = int.Parse(noteTimeAndTrack[1]) + 1
+                    });
+                    continue;
+                }
+
+                //非粉滑条
+                if (noteInfo[0] == "l" && noteInfo[1] == "0")
+                {
+                    var startTimeAndTrack = noteInfo[2].Split(':');
+                    notes.Add(new Note
+                    {
+                        NoteType = isA ? NoteType.滑条a_开始 : NoteType.滑条b_开始,
+                        Time = double.Parse(startTimeAndTrack[0]) / 24,
+                        Track = int.Parse(startTimeAndTrack[1]) + 1
+                    });
+                    for (var j = 3; j < noteInfo.Length - 1; j++)
+                    {
+                        var noteTimeAndTrack = noteInfo[j].Split(':');
+                        notes.Add(new Note
+                        {
+                            NoteType = isA ? NoteType.滑条a_中间 : NoteType.滑条b_中间,
+                            Time = double.Parse(noteTimeAndTrack[0]) / 24,
+                            Track = int.Parse(noteTimeAndTrack[1]) + 1
+                        });
+                    }
+
+                    var endTimeAndTrack = noteInfo[noteInfo.Length - 1].Split(':');
+                    notes.Add(new Note
+                    {
+                        NoteType = isA ? NoteType.滑条a_结束 : NoteType.滑条b_结束,
+                        Time = double.Parse(endTimeAndTrack[0]) / 24,
+                        Track = int.Parse(endTimeAndTrack[1]) + 1
+                    });
+                    isA = !isA;
+                    continue;
+                }
+
+                //粉滑条
+                if (noteInfo[0] == "l" && noteInfo[1] == "1")
+                {
+                    var startTimeAndTrack = noteInfo[2].Split(':');
+                    notes.Add(new Note
+                    {
+                        NoteType = isA ? NoteType.滑条a_开始 : NoteType.滑条b_开始,
+                        Time = double.Parse(startTimeAndTrack[0]) / 24,
+                        Track = int.Parse(startTimeAndTrack[1]) + 1
+                    });
+                    for (var j = 3; j < noteInfo.Length - 1; j++)
+                    {
+                        var noteTimeAndTrack = noteInfo[j].Split(':');
+                        notes.Add(new Note
+                        {
+                            NoteType = isA ? NoteType.滑条a_中间 : NoteType.滑条b_中间,
+                            Time = double.Parse(noteTimeAndTrack[0]) / 24,
+                            Track = int.Parse(noteTimeAndTrack[1]) + 1
+                        });
+                    }
+
+                    var endTimeAndTrack = noteInfo[noteInfo.Length - 1].Split(':');
+                    notes.Add(new Note
+                    {
+                        NoteType = isA ? NoteType.滑条a_粉键结束 : NoteType.滑条b_粉键结束,
+                        Time = double.Parse(endTimeAndTrack[0]) / 24,
+                        Track = int.Parse(endTimeAndTrack[1]) + 1
+                    });
+                    isA = !isA;
+                }
+            }
+
+            //先按时间排，然后按轨道从左到右排
+            defaultScore.Notes = notes.OrderBy(p => p.Time).ThenBy(p => p.Track).ToList();
             return defaultScore;
         }
     }
