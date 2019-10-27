@@ -40,7 +40,8 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                 switch (convertTypeTo)
                 {
                     case ConvertTypeTo.bestdori: return ToBestdoriScore();
-                    case ConvertTypeTo.bangSimulator: return ToDefaultScore();
+                    case ConvertTypeTo.bangSimulator: return ToBangSimulatorScore();
+                    case ConvertTypeTo.bangbangboom: return ToBangbangboomScore();
                 }
             }
             catch (Exception e)
@@ -54,10 +55,10 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
         #region 各谱面格式输出方法
 
         /// <summary>
-        ///     输出为默认格式
+        ///     输出为bangSimulator播放器格式
         /// </summary>
         /// <returns></returns>
-        private string ToDefaultScore()
+        private string ToBangSimulatorScore()
         {
             var str = "";
             str += $"{Delay_ms}{Environment.NewLine}";
@@ -80,6 +81,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                 bpm = Bpm
             };
             score.Add(head);
+            var tempList = new List<Bestdori.Note>();
             foreach (var note in Notes)
             {
                 var tempNote = new Bestdori.Note();
@@ -198,13 +200,120 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                         break;
                 }
 
-                score.Add(tempNote);
+                tempList.Add(tempNote);
             }
+
+            //先按时间排，然后让滑条结束音符优先在前，其余按轨道从左到右排
+            score.AddRange(tempList.OrderBy(p => p.beat).ThenByDescending(p => p.end).ThenBy(p => p.lane).ToList());
 
             return JsonConvert.SerializeObject(score, new JsonSerializerSettings
             {
                 DefaultValueHandling = DefaultValueHandling.Ignore
             });
+        }
+
+        /// <summary>
+        ///     输出为bangbangboom制谱器格式
+        /// </summary>
+        /// <returns></returns>
+        private string ToBangbangboomScore()
+        {
+            var str = "";
+            str += "\n\n";
+            str += $"+|{Delay_ms / 1000}|{Bpm}|4";
+            str += "\n\n";
+            var index = 0;
+            foreach (var note in Notes)
+            {
+                switch (note.NoteType)
+                {
+                    case NoteType.技能:
+                    case NoteType.白键:
+                        str += $"s|{(int) (note.Time * 24)}:{note.Track - 1}\n";
+                        break;
+                    case NoteType.粉键:
+                        str += $"f|{(int) (note.Time * 24)}:{note.Track - 1}\n";
+                        break;
+                    case NoteType.滑条a_开始:
+                    {
+                        var isFlick = 0;
+                        for (var i = index + 1; i < Notes.Count; i++)
+                        {
+                            if (Notes[i].NoteType == NoteType.滑条a_结束 && Notes[i].Time != note.Time)
+                            {
+                                isFlick = 0;
+                                break;
+                            }
+
+                            if (Notes[i].NoteType == NoteType.滑条a_粉键结束 && Notes[i].Time != note.Time)
+                            {
+                                isFlick = 1;
+                                break;
+                            }
+                        }
+
+                        str += $"l|{isFlick}|{(int) (note.Time * 24)}:{note.Track - 1}";
+                        for (var i = index + 1; i < Notes.Count; i++)
+                        {
+                            if (Notes[i].NoteType == NoteType.滑条a_中间 && Notes[i].Time != note.Time)
+                            {
+                                str += $"|{(int) (Notes[i].Time * 24)}:{Notes[i].Track - 1}";
+                                continue;
+                            }
+
+                            if ((Notes[i].NoteType == NoteType.滑条a_结束 ||
+                                 Notes[i].NoteType == NoteType.滑条a_粉键结束) && Notes[i].Time != note.Time)
+                            {
+                                str += $"|{(int) (Notes[i].Time * 24)}:{Notes[i].Track - 1}\n";
+                                break;
+                            }
+                        }
+                    }
+                        break;
+                    case NoteType.滑条b_开始:
+                    {
+                        var isFlick = 0;
+                        for (var i = index + 1; i < Notes.Count; i++)
+                        {
+                            if (Notes[i].NoteType == NoteType.滑条b_结束 && Notes[i].Time != note.Time)
+                            {
+                                isFlick = 0;
+                                break;
+                            }
+
+                            if (Notes[i].NoteType == NoteType.滑条b_粉键结束 && Notes[i].Time != note.Time)
+                            {
+                                isFlick = 1;
+                                break;
+                            }
+                        }
+
+                        str += $"l|{isFlick}|{(int) (note.Time * 24)}:{note.Track - 1}";
+                        for (var i = index + 1; i < Notes.Count; i++)
+                        {
+                            if (Notes[i].NoteType == NoteType.滑条b_中间 && Notes[i].Time != note.Time)
+                            {
+                                str += $"|{(int) (Notes[i].Time * 24)}:{Notes[i].Track - 1}";
+                                continue;
+                            }
+
+                            if ((Notes[i].NoteType == NoteType.滑条b_结束 ||
+                                 Notes[i].NoteType == NoteType.滑条b_粉键结束) && Notes[i].Time != note.Time)
+                            {
+                                str += $"|{(int) (Notes[i].Time * 24)}:{Notes[i].Track - 1}\n";
+                                break;
+                            }
+                        }
+                    }
+                        break;
+                    case NoteType.改变bpm:
+                        break;
+                }
+
+                index++;
+            }
+
+            return str;
         }
 
         #endregion

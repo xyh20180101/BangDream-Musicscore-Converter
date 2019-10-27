@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using BangDreamMusicscoreConverter.DataClass;
 using BangDreamMusicscoreConverter.DataClass.Bestdori;
@@ -67,6 +68,8 @@ namespace BangDreamMusicscoreConverter.Model
                     throw new Exception("转换出错，请检查原谱面文本");
             }
 
+            //先按时间排，然后按轨道从左到右排
+            notes = notes.OrderBy(p => p.Time).ThenBy(p => p.Track).ToList();
             defaultScore.Notes = notes;
             return defaultScore;
         }
@@ -216,6 +219,16 @@ namespace BangDreamMusicscoreConverter.Model
             }
 
             defaultScore.Notes = notes;
+            return defaultScore;
+        }
+
+        /// <summary>
+        ///     从bangbangboom谱面文本构造谱面对象
+        /// </summary>
+        /// <param name="scoreString">谱面文本</param>
+        public DefaultScore GetDefaultScoreFromBangbangboomScore(string scoreString)
+        {
+            var defaultScore = new DefaultScore();
             return defaultScore;
         }
     }
