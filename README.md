@@ -1,3 +1,10 @@
+有大佬做了网页版bestdori和bangbangboom互转，推荐使用：
+https://player.bangbangboom.ml/
+<br/>
+<br/>
+<br/>
+<br/>
+
 # BangDream-Musicscore-Converter
 邦邦谱面转换器
 
