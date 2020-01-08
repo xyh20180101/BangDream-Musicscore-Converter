@@ -88,9 +88,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataClass\BangCraft\BangCraftInfo.cs" />
-    <Compile Include="DataClass\BangCraft\BangCraftNote.cs" />
-    <Compile Include="DataClass\BangCraft\BangCraftRoot.cs" />
     <Compile Include="DataClass\Bestdori\Score.cs" />
     <Compile Include="DataClass\ConvertTypeTo.cs" />
     <Compile Include="DataClass\DefaultScore\Note.cs" />

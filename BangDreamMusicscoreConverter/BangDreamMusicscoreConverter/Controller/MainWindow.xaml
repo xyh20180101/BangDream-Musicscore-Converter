@@ -25,13 +25,15 @@
                      AcceptsReturn="True" TextWrapping="Wrap" />
             <Grid Grid.Column="1" Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="5*" />
+                    <RowDefinition Height="4*" />
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
-                    <RowDefinition Height="5*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="4*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
@@ -44,6 +46,7 @@
                     <ComboBoxItem Content="bangbangboom制谱器" />
                     <ComboBoxItem Content="bangCraft制谱器" />
                     <ComboBoxItem Content="bangSimulator播放器" />
+                    <ComboBoxItem Content="bandori database" />
                 </ComboBox>
                 <ComboBox x:Name="ConvertTypeToSelector" Grid.Column="1" Grid.Row="3" SelectedIndex="0"
                           HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
@@ -52,7 +55,9 @@
                     <ComboBoxItem Content="bangCraft制谱器" />
                     <ComboBoxItem Content="bangSimulator播放器" />
                 </ComboBox>
-                <Button x:Name="ConvertButton" Grid.Column="1" Grid.Row="5" Content="Convert"
+                <Label  Grid.Column="1" Grid.Row="4" Content="Delay" VerticalContentAlignment="Bottom" Padding="0,5,5,5" />
+                <TextBox x:Name="DelayTextBox" Grid.Column="1" Grid.Row="5" Text="0" VerticalContentAlignment="Center"></TextBox>
+                <Button x:Name="ConvertButton" Grid.Column="1" Grid.Row="7" Content="Convert"
                         Click="ConvertButton_Click" />
             </Grid>
             <Grid Grid.Column="2" Grid.Row="0">

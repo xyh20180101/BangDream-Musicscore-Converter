@@ -90,8 +90,10 @@ namespace BangDreamMusicscoreConverter
         private void ConvertButton_Click(object sender, RoutedEventArgs e)
         {
             var scoreString = _uiBusiness.GetText(SourceTextBox);
+            var delayString = _uiBusiness.GetText(DelayTextBox);
             var defaultScore =
-                _dataBusiness.GetDefaultScore(scoreString, (ConvertTypeFrom) ConvertTypeFromSelector.SelectedIndex);
+	            _dataBusiness.GetDefaultScore(scoreString, (ConvertTypeFrom) ConvertTypeFromSelector.SelectedIndex,
+		            delayString);
             _uiBusiness.ShowText(ResultTextBox,
                 defaultScore.ToString((ConvertTypeTo) ConvertTypeToSelector.SelectedIndex));
         }

@@ -24,7 +24,6 @@ D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDream
 D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.g.resources
 D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.Properties.Resources.resources
 D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.csproj.GenerateResource.cache
-D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.csproj.CoreCompileInputs.cache
 D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.csproj.CopyComplete
 D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.exe
 D:\WL\code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.pdb

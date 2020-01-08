@@ -373,7 +373,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 	        foreach (var note in Notes)
 	        {
                 //N
-		        if (note.NoteType == NoteType.白键)
+		        if (note.NoteType == NoteType.白键|| note.NoteType == NoteType.技能)
 		        {
 			        var noteN = xml.CreateElement("noteN");
 			        Save.AppendChild(noteN);
@@ -383,7 +383,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 			        noteN.AppendChild(lineN);
 
 			        var posN = xml.CreateElement("posN");
-			        posN.InnerText = ((int) (note.Time * 2)).ToString();
+			        posN.InnerText = (note.Time * 2).ToString();
 			        noteN.AppendChild(posN);
 
 			        var typeN = xml.CreateElement("typeN");
@@ -405,7 +405,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 			        noteF.AppendChild(lineF);
 
 			        var posF = xml.CreateElement("posF");
-			        posF.InnerText = ((int)(note.Time * 2)).ToString();
+			        posF.InnerText = (note.Time * 2).ToString();
 			        noteF.AppendChild(posF);
 
 			        var typeF = xml.CreateElement("typeF");
@@ -428,7 +428,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 			        noteL.AppendChild(lineL);
 
 			        var posL = xml.CreateElement("posL");
-			        posL.InnerText = ((int)(note.Time * 2)).ToString();
+			        posL.InnerText = (note.Time * 2).ToString();
 			        noteL.AppendChild(posL);
 
 			        var typeL = xml.CreateElement("typeL");
@@ -440,7 +440,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 			        noteL.AppendChild(startlineL);
 
 			        var startposL = xml.CreateElement("startposL");
-			        startposL.InnerText = ((int)(note.Time * 2)).ToString();
+			        startposL.InnerText = ((note.Time * 2)).ToString();
 			        noteL.AppendChild(startposL);
 
 			        for (var i = index + 1; i < Notes.Count; i++)
@@ -455,7 +455,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 					        noteM.AppendChild(lineM);
 
 					        var posM = xml.CreateElement("posL");
-					        posM.InnerText = ((int)(Notes[i].Time * 2)).ToString();
+					        posM.InnerText = ((Notes[i].Time * 2)).ToString();
 					        noteM.AppendChild(posM);
 
 					        var typeM = xml.CreateElement("typeL");
@@ -479,7 +479,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 					        noteE.AppendChild(lineE);
 
 					        var posE = xml.CreateElement("posL");
-					        posE.InnerText = ((int)(Notes[i].Time * 2)).ToString();
+					        posE.InnerText = ((Notes[i].Time * 2)).ToString();
 					        noteE.AppendChild(posE);
 
 					        var typeE = xml.CreateElement("typeL");
@@ -504,7 +504,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                     noteL.AppendChild(lineL);
 
                     var posL = xml.CreateElement("posL");
-                    posL.InnerText = ((int)(note.Time * 2)).ToString();
+                    posL.InnerText = ((note.Time * 2)).ToString();
                     noteL.AppendChild(posL);
 
                     var typeL = xml.CreateElement("typeL");
@@ -516,7 +516,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                     noteL.AppendChild(startlineL);
 
                     var startposL = xml.CreateElement("startposL");
-                    startposL.InnerText = ((int)(note.Time * 2)).ToString();
+                    startposL.InnerText = ((note.Time * 2)).ToString();
                     noteL.AppendChild(startposL);
 
                     for (var i = index + 1; i < Notes.Count; i++)
@@ -531,7 +531,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                             noteM.AppendChild(lineM);
 
                             var posM = xml.CreateElement("posL");
-                            posM.InnerText = ((int)(Notes[i].Time * 2)).ToString();
+                            posM.InnerText = ((Notes[i].Time * 2)).ToString();
                             noteM.AppendChild(posM);
 
                             var typeM = xml.CreateElement("typeL");
@@ -555,11 +555,64 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
                             noteE.AppendChild(lineE);
 
                             var posE = xml.CreateElement("posL");
-                            posE.InnerText = ((int)(Notes[i].Time * 2)).ToString();
+                            posE.InnerText = ((Notes[i].Time * 2)).ToString();
                             noteE.AppendChild(posE);
 
                             var typeE = xml.CreateElement("typeL");
-                            typeE.InnerText = Notes[i].NoteType == NoteType.滑条b_结束 ? "LE" : "LF";
+                            typeE.InnerText = (Notes[i].NoteType == NoteType.滑条b_结束) ? "LE" : "LF";
+                            noteE.AppendChild(typeE);
+
+                            noteE.AppendChild(startlineL.Clone());
+
+                            noteE.AppendChild(startposL.Clone());
+                            break;
+                        }
+                    }
+                }
+
+                if (note.NoteType == NoteType.长键_开始)
+                {
+                    var noteL = xml.CreateElement("noteL");
+                    Save.AppendChild(noteL);
+
+                    var lineL = xml.CreateElement("lineL");
+                    lineL.InnerText = (note.Track - 4).ToString();
+                    noteL.AppendChild(lineL);
+
+                    var posL = xml.CreateElement("posL");
+                    posL.InnerText = ((note.Time * 2)).ToString();
+                    noteL.AppendChild(posL);
+
+                    var typeL = xml.CreateElement("typeL");
+                    typeL.InnerText = "LS";
+                    noteL.AppendChild(typeL);
+
+                    var startlineL = xml.CreateElement("startlineL");
+                    startlineL.InnerText = (note.Track - 4).ToString();
+                    noteL.AppendChild(startlineL);
+
+                    var startposL = xml.CreateElement("startposL");
+                    startposL.InnerText = ((note.Time * 2)).ToString();
+                    noteL.AppendChild(startposL);
+
+                    for (var i = index + 1; i < Notes.Count; i++)
+                    {
+	                    if ((Notes[i].NoteType == NoteType.长键_结束 ||
+                             Notes[i].NoteType == NoteType.长键_粉键结束) && Notes[i].Time != note.Time && Notes[i].Track==note.Track)
+                        {
+                            var noteE = xml.CreateElement("noteL");
+                            Save.AppendChild(noteE);
+
+                            var lineE = xml.CreateElement("lineL");
+                            lineE.InnerText = (Notes[i].Track - 4).ToString();
+                            noteE.AppendChild(lineE);
+
+                            var posE = xml.CreateElement("posL");
+                            posE.InnerText = ((Notes[i].Time * 2)).ToString();
+                            noteE.AppendChild(posE);
+
+                            var typeE = xml.CreateElement("typeL");
+                            typeE.InnerText = (Notes[i].NoteType == NoteType.长键_结束) ? "LE" : "LF";
                             noteE.AppendChild(typeE);
 
                             noteE.AppendChild(startlineL.Clone());

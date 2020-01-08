@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Xml;
@@ -17,22 +16,26 @@ namespace BangDreamMusicscoreConverter.Model
 {
     public class DataBusiness
     {
-        /// <summary>
+	    private double _delay;
+
+	    /// <summary>
         /// 构造谱面对象
         /// </summary>
         /// <param name="scoreString">谱面文本</param>
         /// <param name="convertTypeFrom">转换类型</param>
         /// <returns></returns>
-	    public DefaultScore GetDefaultScore(string scoreString, ConvertTypeFrom convertTypeFrom)
+	    public DefaultScore GetDefaultScore(string scoreString, ConvertTypeFrom convertTypeFrom,string delayString)
         {
             try
             {
+	            _delay = double.Parse(delayString);
                 switch (convertTypeFrom)
                 {
                     case ConvertTypeFrom.bestdori: return GetDefaultScoreFromBestdoriScore(scoreString);
                     case ConvertTypeFrom.bangSimulator: return GetDefaultScoreFromBangSimulatorScore(scoreString);
                     case ConvertTypeFrom.bangbangboom: return GetDefaultScoreFromBangbangboomScore(scoreString);
                     case ConvertTypeFrom.bangCraft: return GetDefaultScoreFromBangCraftScore(scoreString);
+                    case ConvertTypeFrom.bandori: return GetDefaultScoreFromBandoriJson(scoreString);
                 }
             }
             catch (Exception e)
@@ -70,7 +73,7 @@ namespace BangDreamMusicscoreConverter.Model
                     int.TryParse(str[2], out var track))
                     notes.Add(new Note
                     {
-                        Time = time,
+                        Time = time + _delay,
                         NoteType = noteType,
                         Track = track
                     });
@@ -107,7 +110,7 @@ namespace BangDreamMusicscoreConverter.Model
             var notes = new List<Note>();
             foreach (var note in tempList)
             {
-                var tempNote = new Note {Time = note.beat, Track = note.lane};
+                var tempNote = new Note {Time = note.beat+ _delay, Track = note.lane};
 
                 if (note.note == DataClass.Bestdori.NoteType.Single &&
                     !note.skill &&
@@ -256,7 +259,7 @@ namespace BangDreamMusicscoreConverter.Model
                     notes.Add(new Note
                     {
                         NoteType = NoteType.白键,
-                        Time = double.Parse(noteTimeAndTrack[0]) / 24,
+                        Time = double.Parse(noteTimeAndTrack[0]) / 24 + _delay,
                         Track = int.Parse(noteTimeAndTrack[1]) + 1
                     });
                     continue;
@@ -269,7 +272,7 @@ namespace BangDreamMusicscoreConverter.Model
                     notes.Add(new Note
                     {
                         NoteType = NoteType.粉键,
-                        Time = double.Parse(noteTimeAndTrack[0]) / 24,
+                        Time = double.Parse(noteTimeAndTrack[0]) / 24 + _delay,
                         Track = int.Parse(noteTimeAndTrack[1]) + 1
                     });
                     continue;
@@ -282,7 +285,7 @@ namespace BangDreamMusicscoreConverter.Model
                     notes.Add(new Note
                     {
                         NoteType = isA ? NoteType.滑条a_开始 : NoteType.滑条b_开始,
-                        Time = double.Parse(startTimeAndTrack[0]) / 24,
+                        Time = double.Parse(startTimeAndTrack[0]) / 24 + _delay,
                         Track = int.Parse(startTimeAndTrack[1]) + 1
                     });
                     for (var j = 3; j < noteInfo.Length - 1; j++)
@@ -291,7 +294,7 @@ namespace BangDreamMusicscoreConverter.Model
                         notes.Add(new Note
                         {
                             NoteType = isA ? NoteType.滑条a_中间 : NoteType.滑条b_中间,
-                            Time = double.Parse(noteTimeAndTrack[0]) / 24,
+                            Time = double.Parse(noteTimeAndTrack[0]) / 24 + _delay,
                             Track = int.Parse(noteTimeAndTrack[1]) + 1
                         });
                     }
@@ -300,7 +303,7 @@ namespace BangDreamMusicscoreConverter.Model
                     notes.Add(new Note
                     {
                         NoteType = isA ? NoteType.滑条a_结束 : NoteType.滑条b_结束,
-                        Time = double.Parse(endTimeAndTrack[0]) / 24,
+                        Time = double.Parse(endTimeAndTrack[0]) / 24 + _delay,
                         Track = int.Parse(endTimeAndTrack[1]) + 1
                     });
                     isA = !isA;
@@ -314,7 +317,7 @@ namespace BangDreamMusicscoreConverter.Model
                     notes.Add(new Note
                     {
                         NoteType = isA ? NoteType.滑条a_开始 : NoteType.滑条b_开始,
-                        Time = double.Parse(startTimeAndTrack[0]) / 24,
+                        Time = double.Parse(startTimeAndTrack[0]) / 24 + _delay,
                         Track = int.Parse(startTimeAndTrack[1]) + 1
                     });
                     for (var j = 3; j < noteInfo.Length - 1; j++)
@@ -323,7 +326,7 @@ namespace BangDreamMusicscoreConverter.Model
                         notes.Add(new Note
                         {
                             NoteType = isA ? NoteType.滑条a_中间 : NoteType.滑条b_中间,
-                            Time = double.Parse(noteTimeAndTrack[0]) / 24,
+                            Time = double.Parse(noteTimeAndTrack[0]) / 24 + _delay,
                             Track = int.Parse(noteTimeAndTrack[1]) + 1
                         });
                     }
@@ -332,7 +335,7 @@ namespace BangDreamMusicscoreConverter.Model
                     notes.Add(new Note
                     {
                         NoteType = isA ? NoteType.滑条a_粉键结束 : NoteType.滑条b_粉键结束,
-                        Time = double.Parse(endTimeAndTrack[0]) / 24,
+                        Time = double.Parse(endTimeAndTrack[0]) / 24 + _delay,
                         Track = int.Parse(endTimeAndTrack[1]) + 1
                     });
                     isA = !isA;
@@ -354,6 +357,126 @@ namespace BangDreamMusicscoreConverter.Model
 	        var defaultScore = new DefaultScore();
 	        var xml = new XmlDocument();
 	        xml.LoadXml(scoreString);
+
+	        return defaultScore;
+        }
+
+        /// <summary>
+        ///     从bandori database谱面json构造谱面对象
+        /// </summary>
+        /// <param name="scoreString">谱面文本</param>
+        public DefaultScore GetDefaultScoreFromBandoriJson(string scoreString)
+        {
+	        var defaultScore = new DefaultScore();
+	        var score = JsonConvert.DeserializeObject<dynamic>(scoreString);
+
+	        defaultScore.Bpm = score.metadata.bpm;
+	        defaultScore.Delay_ms = 0;
+            var noteList = new List<Note>();
+
+            foreach (var note in score.objects)
+            {
+	            if(note.type=="System")
+                    continue;
+	            var defaultNote = new Note
+	            {
+		            Time = note.beat+_delay,
+		            Track = note.lane
+	            };
+
+	            if ((note.effect == "Single" || note.effect== "FeverSingle" ) && note.property == "Single")
+	            {
+		            defaultNote.NoteType = NoteType.白键;
+		            noteList.Add(defaultNote);
+                    continue;
+                }
+
+	            if ((note.effect == "Skill") && note.property == "Single")
+	            {
+		            defaultNote.NoteType = NoteType.技能;
+		            noteList.Add(defaultNote);
+		            continue;
+	            }
+
+                if (note.effect == "Flick" && note.property == "Single")
+	            {
+		            defaultNote.NoteType = NoteType.粉键;
+		            noteList.Add(defaultNote);
+		            continue;
+	            }
+
+	            if (note.effect == "SlideStart_A" && note.property == "Slide")
+	            {
+		            defaultNote.NoteType = NoteType.滑条a_开始;
+		            noteList.Add(defaultNote);
+		            continue;
+	            }
+
+	            if (note.effect == "Slide_A" && note.property == "Slide")
+	            {
+		            defaultNote.NoteType = NoteType.滑条a_中间;
+		            noteList.Add(defaultNote);
+		            continue;
+	            }
+
+	            if (note.effect == "SlideEnd_A" && note.property == "Slide")
+	            {
+		            defaultNote.NoteType = NoteType.滑条a_结束;
+		            noteList.Add(defaultNote);
+		            continue;
+	            }
+
+	            if (note.effect == "SlideEndFlick_A" && note.property == "Slide")
+	            {
+		            defaultNote.NoteType = NoteType.滑条a_粉键结束;
+		            noteList.Add(defaultNote);
+		            continue;
+	            }
+
+	            if (note.effect == "SlideStart_B" && note.property == "Slide")
+	            {
+		            defaultNote.NoteType = NoteType.滑条b_开始;
+		            noteList.Add(defaultNote);
+		            continue;
+	            }
+
+	            if (note.effect == "Slide_B" && note.property == "Slide")
+	            {
+		            defaultNote.NoteType = NoteType.滑条b_中间;
+		            noteList.Add(defaultNote);
+		            continue;
+	            }
+
+	            if (note.effect == "SlideEnd_B" && note.property == "Slide")
+	            {
+		            defaultNote.NoteType = NoteType.滑条b_结束;
+		            noteList.Add(defaultNote);
+		            continue;
+	            }
+
+	            if ((note.effect == "Single" || note.effect=="Skill" || note.effect == "FeverSingle") && note.property == "LongStart")
+	            {
+		            defaultNote.NoteType = NoteType.长键_开始;
+		            noteList.Add(defaultNote);
+		            continue;
+	            }
+
+	            if (note.effect == "Single" && note.property == "LongEnd")
+	            {
+		            defaultNote.NoteType = NoteType.长键_结束;
+		            noteList.Add(defaultNote);
+		            continue;
+	            }
+
+	            if (note.effect == "Flick" && note.property == "LongEnd")
+	            {
+		            defaultNote.NoteType = NoteType.长键_粉键结束;
+		            noteList.Add(defaultNote);
+		            continue;
+	            }
+            }
+
+            defaultScore.Notes = noteList;
 
 	        return defaultScore;
         }

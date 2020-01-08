@@ -8,7 +8,8 @@
         bestdori = 0,
         bangbangboom = 1,
         bangCraft = 2,
-        bangSimulator = 3
+        bangSimulator = 3,
+        bandori = 4
     }
 
     /// <summary>
