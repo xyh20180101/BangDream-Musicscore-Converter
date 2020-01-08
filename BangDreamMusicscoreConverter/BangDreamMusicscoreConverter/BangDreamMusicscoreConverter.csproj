@@ -88,12 +88,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataClass\BangCraft\BangCraftInfo.cs" />
+    <Compile Include="DataClass\BangCraft\BangCraftNote.cs" />
+    <Compile Include="DataClass\BangCraft\BangCraftRoot.cs" />
     <Compile Include="DataClass\Bestdori\Score.cs" />
     <Compile Include="DataClass\ConvertTypeTo.cs" />
     <Compile Include="DataClass\DefaultScore\Note.cs" />
     <Compile Include="DataClass\DefaultScore\NoteType.cs" />
     <Compile Include="DataClass\DefaultScore\DefaultScore.cs" />
     <Compile Include="Model\DataBusiness.cs" />
+    <Compile Include="Model\Helper.cs" />
     <Compile Include="Model\IOBusiness.cs" />
     <Compile Include="Model\UIBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -134,5 +138,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

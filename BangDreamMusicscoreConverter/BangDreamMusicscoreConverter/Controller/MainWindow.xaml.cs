@@ -10,9 +10,9 @@ namespace BangDreamMusicscoreConverter
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly DataBusiness dataBusiness = new DataBusiness();
-        private readonly IOBusiness ioBusiness = new IOBusiness();
-        private readonly UIBusiness uiBusiness = new UIBusiness();
+        private readonly DataBusiness _dataBusiness = new DataBusiness();
+        private readonly IOBusiness _ioBusiness = new IOBusiness();
+        private readonly UIBusiness _uiBusiness = new UIBusiness();
 
         /// <summary>
         ///     初始化
@@ -29,18 +29,18 @@ namespace BangDreamMusicscoreConverter
         /// <param name="e"></param>
         private void OpenButton_Click(object sender, RoutedEventArgs e)
         {
-            var filePath = uiBusiness.OpenFileDialogWindow();
+            var filePath = _uiBusiness.OpenFileDialogWindow();
             string musicScore;
             try
             {
-                musicScore = ioBusiness.GetTextFromPath(filePath);
+                musicScore = _ioBusiness.GetTextFromPath(filePath);
             }
             catch (Exception)
             {
                 return;
             }
 
-            uiBusiness.ShowText(SourceTextBox, musicScore);
+            _uiBusiness.ShowText(SourceTextBox, musicScore);
         }
 
         /// <summary>
@@ -72,14 +72,14 @@ namespace BangDreamMusicscoreConverter
             try
             {
                 var filePath = ((string[]) e.Data.GetData(DataFormats.FileDrop))[0];
-                musicScore = ioBusiness.GetTextFromPath(filePath);
+                musicScore = _ioBusiness.GetTextFromPath(filePath);
             }
             catch (Exception)
             {
                 return;
             }
 
-            uiBusiness.ShowText(SourceTextBox, musicScore);
+            _uiBusiness.ShowText(SourceTextBox, musicScore);
         }
 
         /// <summary>
@@ -89,10 +89,10 @@ namespace BangDreamMusicscoreConverter
         /// <param name="e"></param>
         private void ConvertButton_Click(object sender, RoutedEventArgs e)
         {
-            var scoreString = uiBusiness.GetText(SourceTextBox);
+            var scoreString = _uiBusiness.GetText(SourceTextBox);
             var defaultScore =
-                dataBusiness.GetDefaultScore(scoreString, (ConvertTypeFrom) ConvertTypeFromSelector.SelectedIndex);
-            uiBusiness.ShowText(ResultTextBox,
+                _dataBusiness.GetDefaultScore(scoreString, (ConvertTypeFrom) ConvertTypeFromSelector.SelectedIndex);
+            _uiBusiness.ShowText(ResultTextBox,
                 defaultScore.ToString((ConvertTypeTo) ConvertTypeToSelector.SelectedIndex));
         }
 
@@ -103,7 +103,7 @@ namespace BangDreamMusicscoreConverter
         /// <param name="e"></param>
         private void CopyButton_Click(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(uiBusiness.GetText(ResultTextBox));
+            Clipboard.SetText(_uiBusiness.GetText(ResultTextBox));
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace BangDreamMusicscoreConverter
         /// <param name="e"></param>
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            var filePath = uiBusiness.SaveFileDialogWindow();
-            ioBusiness.SaveTextToPath(filePath, uiBusiness.GetText(ResultTextBox));
+            var filePath = _uiBusiness.SaveFileDialogWindow();
+            _ioBusiness.SaveTextToPath(filePath, _uiBusiness.GetText(ResultTextBox));
         }
     }
 }

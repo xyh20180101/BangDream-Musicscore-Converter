@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Xml;
 using BangDreamMusicscoreConverter.DataClass;
 using BangDreamMusicscoreConverter.DataClass.Bestdori;
 using BangDreamMusicscoreConverter.DataClass.DefaultScore;
@@ -15,7 +17,13 @@ namespace BangDreamMusicscoreConverter.Model
 {
     public class DataBusiness
     {
-        public DefaultScore GetDefaultScore(string scoreString, ConvertTypeFrom convertTypeFrom)
+        /// <summary>
+        /// 构造谱面对象
+        /// </summary>
+        /// <param name="scoreString">谱面文本</param>
+        /// <param name="convertTypeFrom">转换类型</param>
+        /// <returns></returns>
+	    public DefaultScore GetDefaultScore(string scoreString, ConvertTypeFrom convertTypeFrom)
         {
             try
             {
@@ -24,6 +32,7 @@ namespace BangDreamMusicscoreConverter.Model
                     case ConvertTypeFrom.bestdori: return GetDefaultScoreFromBestdoriScore(scoreString);
                     case ConvertTypeFrom.bangSimulator: return GetDefaultScoreFromBangSimulatorScore(scoreString);
                     case ConvertTypeFrom.bangbangboom: return GetDefaultScoreFromBangbangboomScore(scoreString);
+                    case ConvertTypeFrom.bangCraft: return GetDefaultScoreFromBangCraftScore(scoreString);
                 }
             }
             catch (Exception e)
@@ -333,6 +342,20 @@ namespace BangDreamMusicscoreConverter.Model
             //先按时间排，然后按轨道从左到右排
             defaultScore.Notes = notes.OrderBy(p => p.Time).ThenBy(p => p.Track).ToList();
             return defaultScore;
+        }
+
+
+        /// <summary>
+        ///     从bangCraft谱面文本构造谱面对象
+        /// </summary>
+        /// <param name="scoreString">谱面文本</param>
+        public DefaultScore GetDefaultScoreFromBangCraftScore(string scoreString)
+        {
+	        var defaultScore = new DefaultScore();
+	        var xml = new XmlDocument();
+	        xml.LoadXml(scoreString);
+
+	        return defaultScore;
         }
     }
 }
