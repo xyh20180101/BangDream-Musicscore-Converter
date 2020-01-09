@@ -19,7 +19,7 @@ https://player.bangbangboom.ml/
 <br/>
 <br/>
 <br/>
-## 开发中，目前支持的功能
+## 支持的功能
 
 - 导入谱面文件，支持拖拽
 
@@ -29,6 +29,29 @@ https://player.bangbangboom.ml/
   - 偷懒1：程序没有bangCraft输入（建议先用bangCraft制谱器导出bangSimulator再转换）
   - 偷懒2：程序没有bandori database输出
 
+```C#
+/// <summary>
+///     转换输入类型
+/// </summary>
+public enum ConvertTypeFrom
+{
+	bestdori = 0,
+	bangbangboom = 1,
+	bangSimulator = 2,
+	bandori = 3
+}
+
+/// <summary>
+///     转换输出类型
+/// </summary>
+public enum ConvertTypeTo
+{
+	bestdori = 0,
+	bangbangboom = 1,
+	bangSimulator = 2,
+	bangCraft = 3
+}
+```
 <br/>
 
 ## 已知的问题
@@ -38,7 +61,6 @@ https://player.bangbangboom.ml/
 - 各谱面转换的白键和粉键目前没有发现问题，滑条可能会有问题，音符可能重复，**一定要人工检查和修正**
   - 即使bangbangboom预览时看起来没问题，玩的时候也有可能出现判定错误
   - 如果用黑科技玩bestdori的谱，一定不能有重叠音符，可以用μBMSC查找重叠点
-<br/>
 <br/>
 
 ## 如果上面还是看不懂那么看这里
