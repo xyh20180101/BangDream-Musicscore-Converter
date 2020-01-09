@@ -44,3 +44,8 @@ D:\Code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMus
 D:\Code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\bin\Debug\Newtonsoft.Json.dll
 D:\Code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\bin\Debug\Newtonsoft.Json.xml
 D:\Code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.csproj.CopyComplete
+D:\Code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\bin\Debug\BangDreamMusicscoreConverter.exe.manifest
+D:\Code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\bin\Debug\BangDreamMusicscoreConverter.application
+D:\Code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.TrustInfo.xml
+D:\Code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.exe.manifest
+D:\Code\BangDream-Musicscore-Converter\BangDreamMusicscoreConverter\BangDreamMusicscoreConverter\obj\Debug\BangDreamMusicscoreConverter.application

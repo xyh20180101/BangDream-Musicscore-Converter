@@ -17,7 +17,17 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="OpenButton" Grid.Column="0" Grid.Row="0" Content="Open" Click="OpenButton_Click" />
+            <Grid Grid.Column="0" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="ClearButton" Grid.Column="1" Grid.Row="0" Content="Clear" Click="ClearButton_Click" />
+                <Button x:Name="OpenButton" Grid.Column="0" Grid.Row="0" Content="Open" Click="OpenButton_Click" />
+            </Grid>
             <TextBox x:Name="SourceTextBox" Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Visible"
                      AcceptsReturn="True" TextWrapping="Wrap" PreviewDragOver="SourceTextBox_PreviewDragOver"
                      PreviewDrop="SourceTextBox_PreviewDrop" />
@@ -40,20 +50,19 @@
                     <ColumnDefinition Width="8*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                <ComboBox x:Name="ConvertTypeFromSelector" Grid.Column="1" Grid.Row="1" SelectedIndex="3"
+                <ComboBox x:Name="ConvertTypeFromSelector" Grid.Column="1" Grid.Row="1" SelectedIndex="0"
                           HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                     <ComboBoxItem Content="bestdori制谱器" />
                     <ComboBoxItem Content="bangbangboom制谱器" />
-                    <ComboBoxItem Content="bangCraft制谱器" />
                     <ComboBoxItem Content="bangSimulator播放器" />
-                    <ComboBoxItem Content="bandori database" />
+                    <ComboBoxItem Content="bandori database播放器" />
                 </ComboBox>
-                <ComboBox x:Name="ConvertTypeToSelector" Grid.Column="1" Grid.Row="3" SelectedIndex="0"
+                <ComboBox x:Name="ConvertTypeToSelector" Grid.Column="1" Grid.Row="3" SelectedIndex="1"
                           HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                     <ComboBoxItem Content="bestdori制谱器" />
                     <ComboBoxItem Content="bangbangboom制谱器" />
-                    <ComboBoxItem Content="bangCraft制谱器" />
                     <ComboBoxItem Content="bangSimulator播放器" />
+                    <ComboBoxItem Content="bangCraft制谱器" />
                 </ComboBox>
                 <Label  Grid.Column="1" Grid.Row="4" Content="Delay" VerticalContentAlignment="Bottom" Padding="0,5,5,5" />
                 <TextBox x:Name="DelayTextBox" Grid.Column="1" Grid.Row="5" Text="0" VerticalContentAlignment="Center"></TextBox>

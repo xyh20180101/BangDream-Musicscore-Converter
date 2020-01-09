@@ -49,7 +49,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 			}
 			catch (Exception e)
 			{
-				MessageBox.Show(e.ToString());
+				MessageBox.Show(e.ToString(), "转换失败");
 			}
 
 			return "";
@@ -188,7 +188,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 						};
 						tempList.Add(tempNote);
 						break;
-					
+
 					case NoteType.滑条b_结束:
 						tempNote = new Bestdori.Note
 						{
