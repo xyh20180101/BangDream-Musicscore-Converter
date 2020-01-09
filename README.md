@@ -6,7 +6,7 @@ https://player.bangbangboom.ml/
 <br/>
 
 # BangDream-Musicscore-Converter
-邦邦谱面转换器
+# 邦邦谱面转换器
 
 [下载](https://github.com/xyh20180101/BangDream-Musicscore-Converter/releases)
 <br/>
@@ -14,12 +14,12 @@ https://player.bangbangboom.ml/
 
 运行需要.NET Framework 4.7.2  
 
-界面：
+## 界面
 ![image](https://raw.githubusercontent.com/xyh20180101/BangDream-Musicscore-Converter/master/README_img/img1.png)
 <br/>
 <br/>
 <br/>
-开发中，目前支持的功能：
+## 开发中，目前支持的功能
 
 - 导入谱面文件，支持拖拽
 
@@ -31,7 +31,7 @@ https://player.bangbangboom.ml/
 
 <br/>
 
-已知的问题：
+## 已知的问题
 
 - 从BanG! simulator chart_downloader下载的邦邦官谱滑条有问题，不要用那个，正确获取官谱的方法下面有说
 
@@ -41,7 +41,7 @@ https://player.bangbangboom.ml/
 <br/>
 <br/>
 
-如果上面还是看不懂那么看这里：
+## 如果上面还是看不懂那么看这里
 - 如果你想把在某个平台自制的谱放到其他平台上：
   - 用bangCraft做的：bangCraft=>bangSimulator=>转换程序=>bangSimulator/bestdori/bangbangboom
   - 用bestdori/bangbangboom做的：bestdori/bangbangboom=>转换程序=>bangSimulator/bestdori/bangbangboom
