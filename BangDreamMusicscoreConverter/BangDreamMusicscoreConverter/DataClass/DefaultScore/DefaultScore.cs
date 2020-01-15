@@ -726,65 +726,23 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 		/// <returns></returns>
 		private string ToBMS()
 		{
+			/*轨道1-7:6123458*/
+			/*白键07 绿条a开始/中间07 绿条a结束08 绿条b开始/中间05 绿条b结束06 长键开始/结束03 粉键0A 技能0N*/
+
 			var result = "#00001:01" + "\r\n";
 
 			var beatCount = 0;
 
-			foreach (var note in Notes)
+			while (beatCount * 4 < Notes.Last().Time)
 			{
-				var beat = (note.Time);
-				if ((int)Math.Floor(beat / 4) > beatCount)
-					result += "\r\n";
-				beatCount = (int)Math.Floor(beat / 4);
-				var a = beatCount.ToString().PadLeft(3, '0');
-
-				var b = 0;
-				switch (note.NoteType)
+				for (var i = 1; i <= 7; i++)
 				{
-					case NoteType.白键:
-						b = 1;
-						break;
+					var trackNotes = Notes.Where(p =>
+						p.Time >= beatCount * 4 && p.Time < (beatCount + 1) * 4 && p.Track == i);
+					//需要一个计算同轨音符最小分母算法
 				}
 
-				var c = 0;
-				switch (note.Track)
-				{
-					case 1: 
-						c = 6;
-						break;
-					case 2:
-						c = 1;
-						break;
-					case 3:
-						c = 2;
-						break;
-					case 4:
-						c = 3;
-						break;
-					case 5:
-						c = 4;
-						break;
-					case 6:
-						c = 5;
-						break;
-					case 7:
-						c = 8;
-						break;
-				}
-
-				var (item1, item2) = ((beat % 4) / 4).ConvertToFraction();
-				var d = "";
-				for (var i = 0; i < item2; i++)
-				{
-					d += "00";
-				}
-
-				d = d.Remove(item1, 2);
-				d = d.Insert(item1, "07");
-
-				var line = $"#{a}{b}{c}:{d}";
-
-				result += line + "\r\n";
+				beatCount++;
 			}
 
 			return result;
