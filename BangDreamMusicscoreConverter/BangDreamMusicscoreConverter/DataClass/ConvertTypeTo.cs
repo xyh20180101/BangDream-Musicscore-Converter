@@ -19,6 +19,7 @@
 		bestdori = 0,
 		bangbangboom = 1,
 		bangSimulator = 2,
-		bangCraft = 3
+		bangCraft = 3,
+		bms = 4
 	}
 }

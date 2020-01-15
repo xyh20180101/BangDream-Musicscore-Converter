@@ -45,6 +45,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 					case ConvertTypeTo.bangSimulator: return ToBangSimulatorScore();
 					case ConvertTypeTo.bangbangboom: return ToBangbangboomScore();
 					case ConvertTypeTo.bangCraft: return ToBangCraftScore();
+					case ConvertTypeTo.bms: return ToBMS();
 				}
 			}
 			catch (Exception e)
@@ -715,6 +716,76 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 			}
 
 			var result = Helper.ConvertXmlDocumentTostring(xml);
+
+			return result;
+		}
+
+		/// <summary>
+		///		输出为BMS格式
+		/// </summary>
+		/// <returns></returns>
+		private string ToBMS()
+		{
+			var result = "#00001:01" + "\r\n";
+
+			var beatCount = 0;
+
+			foreach (var note in Notes)
+			{
+				var beat = (note.Time);
+				if ((int)Math.Floor(beat / 4) > beatCount)
+					result += "\r\n";
+				beatCount = (int)Math.Floor(beat / 4);
+				var a = beatCount.ToString().PadLeft(3, '0');
+
+				var b = 0;
+				switch (note.NoteType)
+				{
+					case NoteType.白键:
+						b = 1;
+						break;
+				}
+
+				var c = 0;
+				switch (note.Track)
+				{
+					case 1: 
+						c = 6;
+						break;
+					case 2:
+						c = 1;
+						break;
+					case 3:
+						c = 2;
+						break;
+					case 4:
+						c = 3;
+						break;
+					case 5:
+						c = 4;
+						break;
+					case 6:
+						c = 5;
+						break;
+					case 7:
+						c = 8;
+						break;
+				}
+
+				var (item1, item2) = ((beat % 4) / 4).ConvertToFraction();
+				var d = "";
+				for (var i = 0; i < item2; i++)
+				{
+					d += "00";
+				}
+
+				d = d.Remove(item1, 2);
+				d = d.Insert(item1, "07");
+
+				var line = $"#{a}{b}{c}:{d}";
+
+				result += line + "\r\n";
+			}
 
 			return result;
 		}

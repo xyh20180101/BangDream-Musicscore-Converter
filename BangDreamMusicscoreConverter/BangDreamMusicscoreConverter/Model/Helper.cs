@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Xml;
 
@@ -23,5 +24,24 @@ namespace BangDreamMusicscoreConverter.Model
 			memoryStream.Close();
 			return xmlString;
 		}
-    }
+
+		public static (int,int) ConvertToFraction(this double n,int denominator = 960)
+		{
+			var a = Convert.ToInt32(n * denominator);
+			var A = Convert.ToInt32(n * denominator);
+			var b = denominator;
+			var B = denominator;
+
+			while (b != 0)
+			{
+				var temp = a % b;
+				a = b;
+				b = temp;
+			}
+			A /= a;
+			B /= a;
+
+			return (A, B);
+		}
+	}
 }

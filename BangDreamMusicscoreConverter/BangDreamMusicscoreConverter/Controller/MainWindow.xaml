@@ -63,6 +63,7 @@
                     <ComboBoxItem Content="bangbangboom制谱器" />
                     <ComboBoxItem Content="bangSimulator播放器" />
                     <ComboBoxItem Content="bangCraft制谱器" />
+                    <ComboBoxItem Content="BMS" />
                 </ComboBox>
                 <Label  Grid.Column="1" Grid.Row="4" Content="Delay" VerticalContentAlignment="Bottom" Padding="0,5,5,5" />
                 <TextBox x:Name="DelayTextBox" Grid.Column="1" Grid.Row="5" Text="0" VerticalContentAlignment="Center"></TextBox>
