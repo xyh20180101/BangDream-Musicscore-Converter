@@ -721,13 +721,15 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 		}
 
 		/// <summary>
-		///		输出为BMS格式
+		///     输出为BMS格式
 		/// </summary>
 		/// <returns></returns>
 		private string ToBMS()
 		{
 			/*轨道1-7:6123458*/
-			/*白键07 绿条a开始/中间07 绿条a结束08 绿条b开始/中间05 绿条b结束06 长键开始/结束03 粉键0A 技能0N*/
+
+			/*1通道    白键03 粉键04 技能05 绿条a开始/中间06 绿条a结束07 绿条a粉键结束0G 绿条b开始/中间08 绿条b结束09 绿条b粉键结束0H*/
+			/*5通道    长键开始/结束03 长键粉键结束04*/
 
 			var result = "#00001:01" + "\r\n";
 
@@ -738,8 +740,59 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 				for (var i = 1; i <= 7; i++)
 				{
 					var trackNotes = Notes.Where(p =>
-						p.Time >= beatCount * 4 && p.Time < (beatCount + 1) * 4 && p.Track == i);
-					//需要一个计算同轨音符最小分母算法
+							p.Time >= beatCount * 4 && p.Time < (beatCount + 1) * 4 && p.Track == i)
+						.OrderBy(p => p.Time)
+						.ToList();
+					if (!trackNotes.Any())
+						continue;
+					var fractions = trackNotes.Select(p => p.Time % 4).ToList().ConvertToFraction();
+					var str00 = new string('0', fractions[0].Item2 * 2);
+					for (var j = 0; j < trackNotes.Count(); j++)
+					{
+						str00 = str00.Remove(fractions[j].Item1, 2);
+						var typeText = "03";
+						switch (trackNotes[j].NoteType)
+						{
+							case NoteType.白键:
+								typeText = "03";
+								break;
+							case NoteType.粉键:
+								typeText = "04";
+								break;
+							case NoteType.技能:
+								typeText = "05";
+								break;
+							case NoteType.滑条a_开始:
+							case NoteType.滑条a_中间:
+								typeText = "06";
+								break;
+							case NoteType.滑条a_结束:
+								typeText = "07";
+								break;
+							case NoteType.滑条b_开始:
+							case NoteType.滑条b_中间:
+								typeText = "08";
+								break;
+							case NoteType.滑条b_结束:
+								typeText = "09";
+								break;
+							case NoteType.滑条a_粉键结束:
+								typeText = "0G";
+								break;
+							case NoteType.滑条b_粉键结束:
+								typeText = "0H";
+								break;
+							case NoteType.长键_开始:
+							case NoteType.长键_结束:
+								typeText = "03";
+								break;
+							case NoteType.长键_粉键结束:
+								typeText = "04";
+								break;
+						}
+
+						str00 = str00.Insert(fractions[j].Item1, typeText);
+					}
 				}
 
 				beatCount++;

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 
@@ -9,39 +11,50 @@ namespace BangDreamMusicscoreConverter.Model
 	{
 		public static string ConvertXmlDocumentTostring(XmlDocument xmlDocument)
 		{
-			MemoryStream memoryStream = new MemoryStream();
-			XmlWriter writer = XmlWriter.Create(memoryStream, new XmlWriterSettings
+			var memoryStream = new MemoryStream();
+			var writer = XmlWriter.Create(memoryStream, new XmlWriterSettings
 			{
 				OmitXmlDeclaration = true,
 				Indent = true,
 				Encoding = Encoding.UTF8
 			});
 			xmlDocument.Save(writer);
-			StreamReader streamReader = new StreamReader(memoryStream);
+			var streamReader = new StreamReader(memoryStream);
 			memoryStream.Position = 0;
-			string xmlString = streamReader.ReadToEnd();
+			var xmlString = streamReader.ReadToEnd();
 			streamReader.Close();
 			memoryStream.Close();
 			return xmlString;
 		}
 
-		public static (int,int) ConvertToFraction(this double n,int denominator = 960)
+		public static List<(int,int)> ConvertToFraction(this List<double> numList,int denominator = 960)
 		{
-			var a = Convert.ToInt32(n * denominator);
-			var A = Convert.ToInt32(n * denominator);
-			var b = denominator;
-			var B = denominator;
-
-			while (b != 0)
+			var intList = numList.Select(num => Convert.ToInt32(num * 960)).OrderBy(p => p).ToList();
+			var factorList = new List<int>();
+			for (var i = intList[0]-1; i > 0; i--)
 			{
-				var temp = a % b;
-				a = b;
-				b = temp;
+				if (intList[0] % i == 0)
+				{
+					factorList.Add(i);
+				}
 			}
-			A /= a;
-			B /= a;
 
-			return (A, B);
+			var maxFactor = 1;
+			foreach (var factor in factorList)
+			{
+				if(denominator%factor!=0)
+					continue;
+
+				var b = intList.All(num => num % factor == 0);
+
+				if (b)
+				{
+					maxFactor = factor;
+					break;
+				}
+			}
+
+			return intList.Select(num => (num / maxFactor, denominator / maxFactor)).ToList();
 		}
 	}
 }
