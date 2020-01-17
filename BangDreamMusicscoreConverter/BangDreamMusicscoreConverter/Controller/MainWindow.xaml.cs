@@ -94,6 +94,8 @@ namespace BangDreamMusicscoreConverter
 			var defaultScore =
 				_dataBusiness.GetDefaultScore(scoreString, (ConvertTypeFrom) ConvertTypeFromSelector.SelectedIndex,
 					delayString);
+			if (CheckRepeatCheckBox.IsChecked == true)
+				_dataBusiness.CheckRepeat(defaultScore);
 			_uiBusiness.ShowText(ResultTextBox,
 				defaultScore.ToString((ConvertTypeTo) ConvertTypeToSelector.SelectedIndex));
 		}

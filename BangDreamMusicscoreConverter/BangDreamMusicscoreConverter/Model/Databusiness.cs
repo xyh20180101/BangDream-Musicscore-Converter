@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using BangDreamMusicscoreConverter.DataClass;
 using BangDreamMusicscoreConverter.DataClass.Bestdori;
@@ -463,6 +464,28 @@ namespace BangDreamMusicscoreConverter.Model
 			defaultScore.Notes = noteList;
 
 			return defaultScore;
+		}
+
+		/// <summary>
+		///		检查重复note
+		/// </summary>
+		/// <param name="defaultScore"></param>
+		public void CheckRepeat(DefaultScore defaultScore)
+		{
+			var repeatList = defaultScore.Notes.GroupBy(p => new {p.Time, p.Track}).Where(p => p.Count() > 1).ToList();
+
+			var str = "位于\r\n";
+			foreach (var i in repeatList)
+			{
+				str += $"Time:{i.Key.Time} Track:{i.Key.Track} NoteCount:{i.Count()}\r\n";
+			}
+
+			str += "转换过程不作处理,请在原谱面文件上自行修改";
+
+			if (repeatList.Count != 0)
+			{
+				MessageBox.Show(str, "检测到重复note");
+			}
 		}
 	}
 }

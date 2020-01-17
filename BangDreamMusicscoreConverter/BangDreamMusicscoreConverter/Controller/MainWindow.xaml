@@ -57,6 +57,7 @@
                     <ComboBoxItem Content="bangSimulator播放器" />
                     <ComboBoxItem Content="bandori database播放器" />
                 </ComboBox>
+                <CheckBox x:Name="CheckRepeatCheckBox" Grid.Column="1" Grid.Row="2" Content="CheckRepeat" VerticalContentAlignment="Center" Margin="0" IsChecked="True"/>
                 <ComboBox x:Name="ConvertTypeToSelector" Grid.Column="1" Grid.Row="3" SelectedIndex="1"
                           HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                     <ComboBoxItem Content="bestdori制谱器" />

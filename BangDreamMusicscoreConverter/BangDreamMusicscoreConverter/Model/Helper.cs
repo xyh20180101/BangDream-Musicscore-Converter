@@ -31,9 +31,19 @@ namespace BangDreamMusicscoreConverter.Model
 		{
 			var intList = numList.Select(num => Convert.ToInt32(num * 960)).OrderBy(p => p).ToList();
 			var factorList = new List<int>();
-			for (var i = intList[0]-1; i > 0; i--)
+			var not0min = 1;
+			try
 			{
-				if (intList[0] % i == 0)
+				not0min = intList.First(p => p != 0);
+			}
+			catch
+			{
+				return new List<(int, int)> {(0, 1)};
+			}
+
+			for (var i = not0min ; i > 0; i--)
+			{
+				if (not0min % i == 0)
 				{
 					factorList.Add(i);
 				}

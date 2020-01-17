@@ -733,25 +733,87 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 
 			var result = "#00001:01" + "\r\n";
 
+			result = result.Insert(0, @"#PLAYER 1
+#GENRE 
+#TITLE 
+#ARTIST 
+"+$"#BPM {Bpm}"+ @"
+#PLAYLEVEL 1
+#RANK 1
+
+#STAGEFILE 
+
+#WAV01 bgm990.wav
+#WAV03 bd.wav
+#WAV04 flick.wav
+#WAV05 skill.wav
+#WAV06 slide_a.wav
+#WAV07 slide_end_a.wav
+#WAV08 slide_b.wav
+#WAV09 slide_end_b.wav
+#WAV0B cmd_fever_end.wav
+#WAV0C cmd_fever_ready.wav
+#WAV0D cmd_fever_start.wav
+#WAV0E fever_note.wav
+#WAV0G slide_end_flick_a.wav
+#WAV0H slide_end_flick_b.wav
+
+#BGM bgm001
+
+");
+
 			var beatCount = 0;
 
 			while (beatCount * 4 < Notes.Last().Time)
 			{
+				var strList = new List<string>();
+
+				//长键以外
 				for (var i = 1; i <= 7; i++)
 				{
-					var trackNotes = Notes.Where(p =>
-							p.Time >= beatCount * 4 && p.Time < (beatCount + 1) * 4 && p.Track == i)
+					var a = beatCount.ToString().PadLeft(3, '0');
+					var b = "1";
+					var c = "6";
+					switch (i)
+					{
+						case 1: 
+							c = "6";
+							break;
+						case 2:
+							c = "1";
+							break;
+						case 3:
+							c = "2";
+							break;
+						case 4:
+							c = "3";
+							break;
+						case 5:
+							c = "4";
+							break;
+						case 6:
+							c = "5";
+							break;
+						case 7:
+							c = "8";
+							break;
+					}
+
+					var trackNormalNotes = Notes.Where(p =>
+							p.Time >= beatCount * 4 && p.Time < (beatCount + 1) * 4 && p.Track == i &&
+							p.NoteType != NoteType.长键_开始 && p.NoteType != NoteType.长键_结束 &&
+							p.NoteType != NoteType.长键_粉键结束)
 						.OrderBy(p => p.Time)
 						.ToList();
-					if (!trackNotes.Any())
+					if (!trackNormalNotes.Any())
 						continue;
-					var fractions = trackNotes.Select(p => p.Time % 4).ToList().ConvertToFraction();
-					var str00 = new string('0', fractions[0].Item2 * 2);
-					for (var j = 0; j < trackNotes.Count(); j++)
+					var fractions = trackNormalNotes.Select(p => (p.Time % 4) / 4).ToList().ConvertToFraction();
+					var d = new string('0', fractions[0].Item2 * 2);
+					for (var j = 0; j < trackNormalNotes.Count(); j++)
 					{
-						str00 = str00.Remove(fractions[j].Item1, 2);
+						d = d.Remove(fractions[j].Item1 * 2, 2);
 						var typeText = "03";
-						switch (trackNotes[j].NoteType)
+						switch (trackNormalNotes[j].NoteType)
 						{
 							case NoteType.白键:
 								typeText = "03";
@@ -791,10 +853,93 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 								break;
 						}
 
-						str00 = str00.Insert(fractions[j].Item1, typeText);
+						d = d.Insert(fractions[j].Item1 * 2, typeText);
 					}
+
+					var line = $"#{a}{b}{c}:{d}";
+
+					strList.Add(line);
 				}
 
+				foreach (var str in strList.OrderBy(p => p))
+				{
+					result += str + "\r\n";
+				}
+
+				
+				strList=new List<string>();
+
+				//长键
+				for (var i = 1; i <= 7; i++)
+				{
+					var a = beatCount.ToString().PadLeft(3, '0');
+					var b = "5";
+					var c = "6";
+					switch (i)
+					{
+						case 1:
+							c = "6";
+							break;
+						case 2:
+							c = "1";
+							break;
+						case 3:
+							c = "2";
+							break;
+						case 4:
+							c = "3";
+							break;
+						case 5:
+							c = "4";
+							break;
+						case 6:
+							c = "5";
+							break;
+						case 7:
+							c = "8";
+							break;
+					}
+
+					var trackNormalNotes = Notes.Where(p =>
+							p.Time >= beatCount * 4 && p.Time < (beatCount + 1) * 4 && p.Track == i && (
+								p.NoteType == NoteType.长键_开始 || p.NoteType == NoteType.长键_结束 ||
+								p.NoteType == NoteType.长键_粉键结束))
+						.OrderBy(p => p.Time)
+						.ToList();
+					if (!trackNormalNotes.Any())
+						continue;
+
+					var fractions = trackNormalNotes.Select(p => (p.Time % 4)/4).ToList().ConvertToFraction();
+					var d = new string('0', fractions[0].Item2 * 2);
+					for (var j = 0; j < trackNormalNotes.Count(); j++)
+					{
+						d = d.Remove(fractions[j].Item1 * 2, 2);
+						var typeText = "03";
+						switch (trackNormalNotes[j].NoteType)
+						{
+							case NoteType.长键_开始:
+							case NoteType.长键_结束:
+								typeText = "03";
+								break;
+							case NoteType.长键_粉键结束:
+								typeText = "04";
+								break;
+						}
+
+						d = d.Insert(fractions[j].Item1 * 2, typeText);
+					}
+
+					var line = $"#{a}{b}{c}:{d}";
+
+					strList.Add(line);
+				}
+
+				foreach (var str in strList.OrderBy(p => p))
+				{
+					result += str + "\r\n";
+				}
+
+				result += "\r\n";
 				beatCount++;
 			}
 
