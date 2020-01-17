@@ -80,7 +80,7 @@ public enum ConvertTypeTo
   - bangSimulator/bestdori/bangbangboom/bandori database=>转换程序=>bangCraft，生成的文本放到BanG!Craft_Beta1.5/BanG!Craft_Data/Save里面，不要带txt后缀
   
 - 如果你想用官谱替换黑科技
-  - 需要的工具包自行获取，这里只提供BMS谱面转换，免去非要从bestdori上传谱面再导入的麻烦
+  - 需要的工具包自行获取，这里只提供BMS谱面转换，免去非要从bestdori上传谱面再导入的麻烦。导出后还需要修改#BGM bgmxxx序号
   
 <br/>
 <br/>
