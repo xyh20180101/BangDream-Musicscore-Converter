@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows;
 using BangDreamMusicscoreConverter.DataClass;
 using BangDreamMusicscoreConverter.DataClass.Bestdori;
@@ -466,8 +465,10 @@ namespace BangDreamMusicscoreConverter.Model
 			return defaultScore;
 		}
 
+		#region 标准化
+
 		/// <summary>
-		///		检查重复note
+		///     检查重复note
 		/// </summary>
 		/// <param name="defaultScore"></param>
 		public void CheckRepeat(DefaultScore defaultScore)
@@ -475,17 +476,163 @@ namespace BangDreamMusicscoreConverter.Model
 			var repeatList = defaultScore.Notes.GroupBy(p => new {p.Time, p.Track}).Where(p => p.Count() > 1).ToList();
 
 			var str = "位于\r\n";
-			foreach (var i in repeatList)
-			{
-				str += $"Time:{i.Key.Time} Track:{i.Key.Track} NoteCount:{i.Count()}\r\n";
-			}
+			foreach (var i in repeatList) str += $"Time:{i.Key.Time} Track:{i.Key.Track} NoteCount:{i.Count()}\r\n";
 
 			str += "转换过程不作处理,请在原谱面文件上自行修改";
 
-			if (repeatList.Count != 0)
+			if (repeatList.Count != 0) MessageBox.Show(str, "检测到重复note");
+		}
+
+		/// <summary>
+		///     直ab绿条转长键
+		/// </summary>
+		/// <param name="defaultScore"></param>
+		public void GenLongNote(DefaultScore defaultScore)
+		{
+			var notes = defaultScore.Notes;
+			for (var i = 0; i < notes.Count; i++)
 			{
-				MessageBox.Show(str, "检测到重复note");
+				if (notes[i].NoteType == NoteType.滑条a_开始)
+				{
+					var isLong = false;
+					for (var j = i + 1; j < notes.Count; j++)
+					{
+						if (notes[j].NoteType == NoteType.滑条a_中间)
+						{
+							break;
+						}
+
+						if (notes[j].NoteType == NoteType.滑条a_结束)
+						{
+							if (notes[j].Track == notes[i].Track)
+							{
+								isLong = true;
+								notes[j].NoteType = NoteType.长键_结束;
+							}
+							break;
+						}
+
+						if (notes[j].NoteType == NoteType.滑条a_粉键结束)
+						{
+							if (notes[j].Track == notes[i].Track)
+							{
+								isLong = true;
+								notes[j].NoteType = NoteType.长键_粉键结束;
+							}
+							break;
+						}
+					}
+
+					if (isLong)
+						notes[i].NoteType = NoteType.长键_开始;
+				}
+
+				if (notes[i].NoteType == NoteType.滑条b_开始)
+				{
+					var isLong = false;
+					for (var j = i + 1; j < notes.Count; j++)
+					{
+						if (notes[j].NoteType == NoteType.滑条b_中间)
+						{
+							break;
+						}
+
+						if (notes[j].NoteType == NoteType.滑条b_结束)
+						{
+							if (notes[j].Track == notes[i].Track)
+							{
+								isLong = true;
+								notes[j].NoteType = NoteType.长键_结束;
+							}
+							break;
+						}
+
+						if (notes[j].NoteType == NoteType.滑条b_粉键结束)
+						{
+							if (notes[j].Track == notes[i].Track)
+							{
+								isLong = true;
+								notes[j].NoteType = NoteType.长键_粉键结束;
+							}
+							break;
+						}
+					}
+
+					if (isLong)
+						notes[i].NoteType = NoteType.长键_开始;
+				}
 			}
 		}
+
+		/// <summary>
+		///		修复首尾连接同类型滑条
+		/// </summary>
+		/// <param name="defaultScore"></param>
+		public void FixSamePosSlide(DefaultScore defaultScore)
+		{
+			var notes = defaultScore.Notes;
+			for (var i = 0; i < notes.Count; i++)
+			{
+				if (notes[i].NoteType == NoteType.滑条a_结束)
+				{
+					var sameTimeNotes = notes.Where(p => p.Time == notes[i].Time && p.Track != notes[i].Track).ToList();
+					if (sameTimeNotes.Count == 1 && sameTimeNotes[0].NoteType == NoteType.滑条a_开始)
+					{
+						sameTimeNotes[0].NoteType = NoteType.滑条b_开始;
+						for (int j = i + 1; j < notes.Count; j++)
+						{
+							if (notes[j].NoteType == NoteType.滑条a_中间)
+							{
+								notes[j].NoteType = NoteType.滑条b_中间;
+								continue;
+							}
+
+							if (notes[j].NoteType == NoteType.滑条a_结束)
+							{
+								notes[j].NoteType = NoteType.滑条b_结束;
+								break;
+							}
+
+							if (notes[j].NoteType == NoteType.滑条a_粉键结束)
+							{
+								notes[j].NoteType = NoteType.滑条b_粉键结束;
+								break;
+							}
+						}
+					}
+				}
+
+				if (notes[i].NoteType == NoteType.滑条b_结束)
+				{
+					var sameTimeNotes = notes.Where(p => p.Time == notes[i].Time && p.Track != notes[i].Track).ToList();
+					if (sameTimeNotes.Count == 1 && sameTimeNotes[0].NoteType == NoteType.滑条b_开始)
+					{
+						sameTimeNotes[0].NoteType = NoteType.滑条a_开始;
+						for (int j = i + 1; j < notes.Count; j++)
+						{
+							if (notes[j].NoteType == NoteType.滑条b_中间)
+							{
+								notes[j].NoteType = NoteType.滑条a_中间;
+								continue;
+							}
+
+							if (notes[j].NoteType == NoteType.滑条b_结束)
+							{
+								notes[j].NoteType = NoteType.滑条a_结束;
+								break;
+							}
+
+							if (notes[j].NoteType == NoteType.滑条b_粉键结束)
+							{
+								notes[j].NoteType = NoteType.滑条a_粉键结束;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		#endregion
 	}
 }

@@ -728,37 +728,46 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 		{
 			/*轨道1-7:6123458*/
 
-			/*1通道    白键03 粉键04 技能05 绿条a开始/中间06 绿条a结束07 绿条a粉键结束0G 绿条b开始/中间08 绿条b结束09 绿条b粉键结束0H*/
+			/*1通道    白键03 粉键04 技能05 绿条a开始/中间06 绿条a结束07 绿条a粉键结束08 绿条b开始/中间09 绿条b结束0A 绿条b粉键结束0B*/
 			/*5通道    长键开始/结束03 长键粉键结束04*/
 
 			var result = "#00001:01" + "\r\n";
 
-			result = result.Insert(0, @"#PLAYER 1
+			result = result.Insert(0, @"
+*---------------------- HEADER FIELD
+
+#PLAYER 1
 #GENRE 
 #TITLE 
-#ARTIST 
-"+$"#BPM {Bpm}"+ @"
-#PLAYLEVEL 1
-#RANK 1
+#ARTIST  
+" + $"#BPM {Bpm}"+ @"
+#PLAYLEVEL 
+#RANK 3
 
-#STAGEFILE 
 
-#WAV01 bgm990.wav
+#STAGEFILE
+
+#WAV01 bgm.wav
 #WAV03 bd.wav
 #WAV04 flick.wav
 #WAV05 skill.wav
 #WAV06 slide_a.wav
 #WAV07 slide_end_a.wav
-#WAV08 slide_b.wav
-#WAV09 slide_end_b.wav
-#WAV0B cmd_fever_end.wav
-#WAV0C cmd_fever_ready.wav
-#WAV0D cmd_fever_start.wav
-#WAV0E fever_note.wav
-#WAV0G slide_end_flick_a.wav
-#WAV0H slide_end_flick_b.wav
+#WAV08 slide_end_flick_a.wav
+#WAV09 slide_b.wav
+#WAV0A slide_end_b.wav
+#WAV0B slide_end_flick_b.wav
+#WAV0C cmd_fever_end.wav
+#WAV0D cmd_fever_ready.wav
+#WAV0E cmd_fever_start.wav
+#WAV0F fever_note.wav
+#WAV0G fever_note_flick.wav
 
 #BGM bgm001
+
+
+
+*---------------------- MAIN DATA FIELD
 
 ");
 
@@ -831,18 +840,18 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 							case NoteType.滑条a_结束:
 								typeText = "07";
 								break;
-							case NoteType.滑条b_开始:
-							case NoteType.滑条b_中间:
+							case NoteType.滑条a_粉键结束:
 								typeText = "08";
 								break;
-							case NoteType.滑条b_结束:
+							case NoteType.滑条b_开始:
+							case NoteType.滑条b_中间:
 								typeText = "09";
 								break;
-							case NoteType.滑条a_粉键结束:
-								typeText = "0G";
+							case NoteType.滑条b_结束:
+								typeText = "0A";
 								break;
 							case NoteType.滑条b_粉键结束:
-								typeText = "0H";
+								typeText = "0B";
 								break;
 							case NoteType.长键_开始:
 							case NoteType.长键_结束:

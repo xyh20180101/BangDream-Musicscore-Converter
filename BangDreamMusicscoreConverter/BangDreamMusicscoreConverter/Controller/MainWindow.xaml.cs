@@ -96,6 +96,8 @@ namespace BangDreamMusicscoreConverter
 					delayString);
 			if (CheckRepeatCheckBox.IsChecked == true)
 				_dataBusiness.CheckRepeat(defaultScore);
+			_dataBusiness.GenLongNote(defaultScore);
+			_dataBusiness.FixSamePosSlide(defaultScore);
 			_uiBusiness.ShowText(ResultTextBox,
 				defaultScore.ToString((ConvertTypeTo) ConvertTypeToSelector.SelectedIndex));
 		}
