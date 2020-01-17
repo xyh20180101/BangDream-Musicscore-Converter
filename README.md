@@ -23,9 +23,11 @@ https://player.bangbangboom.ml/
 
 - 导入谱面文件，支持拖拽
 
+- 谱面重复note检测
+
 - 复制和保存谱面文件
 
-- 支持 **bangSimulator**谱面、**bestdori**谱面、**bangbangboom**谱面、**bangCraft**工程、**bandori database**谱面json 的互转
+- 支持 **bangSimulator**谱面、**bestdori**谱面、**bangbangboom**谱面、**bangCraft**工程、**bandori database**谱面json、**BMS**谱面的转换
   - 偷懒1：程序没有bangCraft输入（建议先用bangCraft制谱器导出bangSimulator再转换）
   - 偷懒2：程序没有bandori database输出
 
@@ -49,18 +51,21 @@ public enum ConvertTypeTo
 	bestdori = 0,
 	bangbangboom = 1,
 	bangSimulator = 2,
-	bangCraft = 3
+	bangCraft = 3,
+	bms = 4
 }
 ```
 <br/>
 
 ## 已知的问题
 
+- **强烈建议谱面制作和转换时delay设为0，通过编辑音频达到同步，否则极大概率出现错误**
+
 - 从BanG! simulator chart_downloader下载的邦邦官谱滑条有问题，不要用那个，正确获取官谱的方法下面有说
 
 - 各谱面转换的白键和粉键目前没有发现问题，滑条可能会有问题，音符可能重复，**一定要人工检查和修正**
   - 即使bangbangboom预览时看起来没问题，玩的时候也有可能出现判定错误
-  - 如果用黑科技玩bestdori的谱，一定不能有重叠音符，可以用μBMSC查找重叠点
+  - 如果用黑科技玩bestdori的谱，一定不能有重叠音符
 <br/>
 
 ## 如果上面还是看不懂那么看这里
@@ -73,6 +78,9 @@ public enum ConvertTypeTo
   
 - 如果你跟我一样比较喜欢用上古工具bangCraft做谱：
   - bangSimulator/bestdori/bangbangboom/bandori database=>转换程序=>bangCraft，生成的文本放到BanG!Craft_Beta1.5/BanG!Craft_Data/Save里面，不要带txt后缀
+  
+- 如果你想用官谱替换黑科技
+  - 需要的工具包自行获取，这里只提供BMS谱面转换，免去非要从bestdori上传谱面再导入的麻烦
   
 <br/>
 <br/>
