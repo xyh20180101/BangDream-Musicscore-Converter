@@ -12,7 +12,7 @@ https://player.bangbangboom.ml/
 <br/>
 <br/>
 
-运行需要.NET Framework 4.7.2  
+运行需要.NET Framework 4.7.2(转换程序) .NET core 3.1(bestdori谱面获取)  
 
 ## 界面
 ![image](https://raw.githubusercontent.com/xyh20180101/BangDream-Musicscore-Converter/master/README_img/img2.png)
@@ -22,6 +22,8 @@ https://player.bangbangboom.ml/
 ## 支持的功能
 
 - 导入谱面文件，支持拖拽
+
+- 从bestdori自制谱id获取谱面文件
 
 - 谱面重复note检测
 
