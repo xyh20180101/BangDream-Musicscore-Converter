@@ -740,7 +740,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 #GENRE 
 #TITLE 
 #ARTIST  
-" + $"#BPM {Bpm}"+ @"
+" + $"#BPM {Bpm}" + @"
 #PLAYLEVEL 
 #RANK 3
 
@@ -785,7 +785,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 					var c = "6";
 					switch (i)
 					{
-						case 1: 
+						case 1:
 							c = "6";
 							break;
 						case 2:
@@ -816,7 +816,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 						.ToList();
 					if (!trackNormalNotes.Any())
 						continue;
-					var fractions = trackNormalNotes.Select(p => (p.Time % 4) / 4).ToList().ConvertToFraction();
+					var fractions = trackNormalNotes.Select(p => p.Time % 4 / 4).ToList().ConvertToFraction();
 					var d = new string('0', fractions[0].Item2 * 2);
 					for (var j = 0; j < trackNormalNotes.Count(); j++)
 					{
@@ -870,13 +870,10 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 					strList.Add(line);
 				}
 
-				foreach (var str in strList.OrderBy(p => p))
-				{
-					result += str + "\r\n";
-				}
+				foreach (var str in strList.OrderBy(p => p)) result += str + "\r\n";
 
-				
-				strList=new List<string>();
+
+				strList = new List<string>();
 
 				//长键
 				for (var i = 1; i <= 7; i++)
@@ -918,7 +915,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 					if (!trackNormalNotes.Any())
 						continue;
 
-					var fractions = trackNormalNotes.Select(p => (p.Time % 4)/4).ToList().ConvertToFraction();
+					var fractions = trackNormalNotes.Select(p => p.Time % 4 / 4).ToList().ConvertToFraction();
 					var d = new string('0', fractions[0].Item2 * 2);
 					for (var j = 0; j < trackNormalNotes.Count(); j++)
 					{
@@ -943,10 +940,7 @@ namespace BangDreamMusicscoreConverter.DataClass.DefaultScore
 					strList.Add(line);
 				}
 
-				foreach (var str in strList.OrderBy(p => p))
-				{
-					result += str + "\r\n";
-				}
+				foreach (var str in strList.OrderBy(p => p)) result += str + "\r\n";
 
 				result += "\r\n";
 				beatCount++;
