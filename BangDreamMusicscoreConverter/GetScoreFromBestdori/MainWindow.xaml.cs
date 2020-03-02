@@ -13,6 +13,7 @@ namespace GetScoreFromBestdori
 	public partial class MainWindow : Window
 	{
 		private const string Url = "https://bestdori.com/api/post/details?id=";
+		private const string Url2 = "https://api.bandori.ga/v1/jp/music/chart/";
 		private readonly HttpClient _httpClient;
 
 		public MainWindow()
@@ -31,7 +32,29 @@ namespace GetScoreFromBestdori
 		{
 			try
 			{
-				var response = _httpClient.GetAsync(Url + IdTextBox.Text).Result;
+				var a = LevelComboBox.Text;
+				var response = _httpClient.GetAsync($"{Url2}{IdTextBox2.Text}/{a}")
+					.Result;
+				var result = response.Content.ReadAsStringAsync().Result;
+				var jObject = JsonConvert.DeserializeObject<dynamic>(result);
+				ResultTextBox.Text = jObject.ToString();
+			}
+			catch (Exception exception)
+			{
+				MessageBox.Show(exception.Message);
+			}
+		}
+
+		/// <summary>
+		///     获取按钮2
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GetScoreButton2_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				var response = _httpClient.GetAsync(Url + IdTextBox2.Text).Result;
 				var result = response.Content.ReadAsStringAsync().Result;
 				var jObject = JsonConvert.DeserializeObject<dynamic>(result);
 				ResultTextBox.Text = jObject.post.notes.ToString();
