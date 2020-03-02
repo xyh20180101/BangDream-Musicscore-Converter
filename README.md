@@ -1,5 +1,5 @@
 有大佬做了网页版bestdori和bangbangboom互转，推荐使用：
-https://player.bangbangboom.ml/
+https://player.banground.fun/
 <br/>
 <br/>
 <br/>
@@ -23,7 +23,7 @@ https://player.bangbangboom.ml/
 
 - 导入谱面文件，支持拖拽
 
-- 从bestdori自制谱id获取谱面文件
+- 从bestdori自制谱id或官方歌曲id获取谱面文件
 
 - 谱面重复note检测
 
