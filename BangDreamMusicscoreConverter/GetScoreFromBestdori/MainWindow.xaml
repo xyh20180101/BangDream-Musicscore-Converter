@@ -8,13 +8,15 @@
         Title="GetScoreFromBestdori" Height="340" Width="410" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Label x:Name="UrlLabel" Content="https://bestdori.com/api/post/details?id=" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Top"/>
+        <Label x:Name="UrlLabel2" Content="https://api.bandori.ga/v1/jp/music/chart/" Height="38" VerticalAlignment="Top" Margin="0,26,0,0"/>
+        <Label x:Name="Info1" Content="第一个获取自制谱，格式为bestdori制谱器" Height="38" VerticalAlignment="Top" Margin="0,45,0,0"/>
+        <Label x:Name="Info2" Content="第二个获取官谱，格式为bandori database" Height="38" VerticalAlignment="Top" Margin="0,59,0,0"/>
         <TextBox x:Name="IdTextBox" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="100" Margin="246,3,0,0" VerticalContentAlignment="Top" Padding="0,1,0,0" />
         <Button x:Name="GetScoreButton" IsDefault="True" Content="获取" HorizontalAlignment="Left" Margin="350,3,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="GetScoreButton_Click"/>
         <TextBox x:Name="ResultTextBox" Margin="0,80,0,0" UndoLimit="50" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" AcceptsReturn="True"/>
         <Button x:Name="SaveButton" Content="保存" HorizontalAlignment="Left" Margin="350,56,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="SaveButton_Click"/>
         <Button x:Name="CopyButton" Content="复制" HorizontalAlignment="Left" Margin="306,56,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="CopyButton_Click"/>
         <Button x:Name="ClearButton" Content="清空" HorizontalAlignment="Left" Margin="262,56,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="ClearButton_Click"/>
-        <Label x:Name="UrlLabel2" Content="https://api.bandori.ga/v1/jp/music/chart/" Height="38" VerticalAlignment="Top" Margin="0,26,0,0"/>
         <TextBox x:Name="IdTextBox2" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="36" Margin="246,29,0,0" VerticalContentAlignment="Top" Padding="0,1,0,0" />
         <Button x:Name="GetScoreButton2" IsDefault="True" Content="获取" HorizontalAlignment="Left" Margin="350,29,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="GetScoreButton_Click"/>
         <ComboBox x:Name="LevelComboBox" Height="20" Margin="283,29,0,0" SelectedIndex="0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="64">
@@ -23,7 +25,5 @@
             <ComboBoxItem Content="normal"/>
             <ComboBoxItem Content="easy"/>
         </ComboBox>
-        <Label x:Name="Info1" Content="第一个获取自制谱，格式为bestdori制谱器" Height="38" VerticalAlignment="Top" Margin="0,45,0,0"/>
-        <Label x:Name="Info2" Content="第二个获取官谱，格式为bandori database" Height="38" VerticalAlignment="Top" Margin="0,59,0,0"/>
     </Grid>
 </Window>
