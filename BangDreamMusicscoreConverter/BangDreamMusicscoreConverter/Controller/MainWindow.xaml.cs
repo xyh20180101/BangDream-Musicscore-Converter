@@ -29,18 +29,17 @@ namespace BangDreamMusicscoreConverter
 		/// <param name="e"></param>
 		private void OpenButton_Click(object sender, RoutedEventArgs e)
 		{
-			var filePath = _uiBusiness.OpenFileDialogWindow();
-			string musicScore;
-			try
-			{
-				musicScore = _ioBusiness.GetTextFromPath(filePath);
+            try
+            {
+				var filePath = _uiBusiness.OpenFileDialogWindow();
+			    string musicScore;
+                musicScore = _ioBusiness.GetTextFromPath(filePath);
+                _uiBusiness.ShowText(SourceTextBox, musicScore);
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
 				return;
 			}
-
-			_uiBusiness.ShowText(SourceTextBox, musicScore);
 		}
 
 		/// <summary>
@@ -50,16 +49,23 @@ namespace BangDreamMusicscoreConverter
 		/// <param name="e"></param>
 		private void SourceTextBox_PreviewDragOver(object sender, DragEventArgs e)
 		{
-			e.Effects = DragDropEffects.Copy;
-			//只允许拖拽单个文件
-			if (((string[]) e.Data.GetData(DataFormats.FileDrop)).Length != 1)
-			{
-				e.Handled = false;
-				return;
-			}
+            try
+            {
+                e.Effects = DragDropEffects.Copy;
+                //只允许拖拽单个文件
+                if (((string[]) e.Data.GetData(DataFormats.FileDrop)).Length != 1)
+                {
+                    e.Handled = false;
+                    return;
+                }
 
-			e.Handled = true;
-		}
+                e.Handled = true;
+            }
+            catch (Exception ex)
+            {
+				return;
+            }
+        }
 
 		/// <summary>
 		///     原谱面文本框_拖拽结束事件
@@ -68,18 +74,17 @@ namespace BangDreamMusicscoreConverter
 		/// <param name="e"></param>
 		private void SourceTextBox_PreviewDrop(object sender, DragEventArgs e)
 		{
-			string musicScore;
-			try
-			{
+            try
+            {
+				string musicScore;
 				var filePath = ((string[]) e.Data.GetData(DataFormats.FileDrop))[0];
 				musicScore = _ioBusiness.GetTextFromPath(filePath);
+                _uiBusiness.ShowText(SourceTextBox, musicScore);
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
 				return;
 			}
-
-			_uiBusiness.ShowText(SourceTextBox, musicScore);
 		}
 
 		/// <summary>
@@ -89,18 +94,25 @@ namespace BangDreamMusicscoreConverter
 		/// <param name="e"></param>
 		private void ConvertButton_Click(object sender, RoutedEventArgs e)
 		{
-			var scoreString = _uiBusiness.GetText(SourceTextBox);
-			var delayString = _uiBusiness.GetText(DelayTextBox);
-			var defaultScore =
-				_dataBusiness.GetDefaultScore(scoreString, (ConvertTypeFrom) ConvertTypeFromSelector.SelectedIndex,
-					delayString);
-			if (CheckRepeatCheckBox.IsChecked == true)
-				_dataBusiness.CheckRepeat(defaultScore);
-			_dataBusiness.GenLongNote(defaultScore);
-			_dataBusiness.FixSamePosSlide(defaultScore);
-			_uiBusiness.ShowText(ResultTextBox,
-				defaultScore.ToString((ConvertTypeTo) ConvertTypeToSelector.SelectedIndex));
-		}
+            try
+            {
+                var scoreString = _uiBusiness.GetText(SourceTextBox);
+                var delayString = _uiBusiness.GetText(DelayTextBox);
+                var defaultScore =
+                    _dataBusiness.GetDefaultScore(scoreString, (ConvertTypeFrom) ConvertTypeFromSelector.SelectedIndex,
+                        delayString);
+                if (CheckRepeatCheckBox.IsChecked == true)
+                    _dataBusiness.CheckRepeat(defaultScore);
+                _dataBusiness.GenLongNote(defaultScore);
+                _dataBusiness.FixSamePosSlide(defaultScore);
+                _uiBusiness.ShowText(ResultTextBox,
+                    defaultScore.ToString((ConvertTypeTo) ConvertTypeToSelector.SelectedIndex));
+            }
+            catch (Exception ex)
+            {
+				return;
+            }
+        }
 
 		/// <summary>
 		///     复制按钮_点击事件
@@ -109,8 +121,15 @@ namespace BangDreamMusicscoreConverter
 		/// <param name="e"></param>
 		private void CopyButton_Click(object sender, RoutedEventArgs e)
 		{
-			Clipboard.SetText(_uiBusiness.GetText(ResultTextBox));
-		}
+            try
+            {
+                Clipboard.SetText(_uiBusiness.GetText(ResultTextBox));
+            }
+            catch(Exception ex)
+            {
+				return;
+            }
+        }
 
 		/// <summary>
 		///     保存按钮_点击事件

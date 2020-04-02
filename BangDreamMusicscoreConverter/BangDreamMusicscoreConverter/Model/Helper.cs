@@ -66,5 +66,12 @@ namespace BangDreamMusicscoreConverter.Model
 
 			return intList.Select(num => (num / maxFactor, denominator / maxFactor)).ToList();
 		}
+
+		public static (int,int) ConvertSingleToFraction(this double num, int denominator = 960)
+		{
+			var list = new List<double> { num };
+			var result = list.ConvertToFraction();
+			return result[0];
+		}
 	}
 }

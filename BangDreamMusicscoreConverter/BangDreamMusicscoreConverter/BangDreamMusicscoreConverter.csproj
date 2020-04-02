@@ -107,6 +107,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataClass\BanGround\Score.cs" />
     <Compile Include="DataClass\Bestdori\Score.cs" />
     <Compile Include="DataClass\ConvertTypeTo.cs" />
     <Compile Include="DataClass\DefaultScore\Note.cs" />
