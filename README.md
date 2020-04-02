@@ -29,9 +29,10 @@ https://player.banground.fun/
 
 - 复制和保存谱面文件
 
-- 支持 **bangSimulator**谱面、**bestdori**谱面、**bangbangboom**谱面、**bangCraft**工程、**bandori database**谱面json、**BMS**谱面的转换
+- 支持 **bangSimulator**谱面、**bestdori**谱面、**bangbangboom**谱面、**bangCraft**工程、**bandori database**谱面json、**BMS**、**BanGround**谱面的转换
   - 偷懒1：程序没有bangCraft输入（建议先用bangCraft制谱器导出bangSimulator再转换）
   - 偷懒2：程序没有bandori database输出
+  - 偷懒3：BanGround转换不一定能用，因为试了很多种kirapack打包方式但就硬导不进去，于是没有测试
 
 ```C#
 /// <summary>
@@ -54,7 +55,8 @@ public enum ConvertTypeTo
 	bangbangboom = 1,
 	bangSimulator = 2,
 	bangCraft = 3,
-	bms = 4
+	bms = 4,
+	BanGround=5
 }
 ```
 <br/>
