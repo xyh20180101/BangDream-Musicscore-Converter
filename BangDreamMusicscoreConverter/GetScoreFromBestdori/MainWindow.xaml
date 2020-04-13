@@ -18,7 +18,7 @@
         <Button x:Name="CopyButton" Content="复制" HorizontalAlignment="Left" Margin="306,56,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="CopyButton_Click"/>
         <Button x:Name="ClearButton" Content="清空" HorizontalAlignment="Left" Margin="262,56,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="ClearButton_Click"/>
         <TextBox x:Name="IdTextBox2" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="36" Margin="246,29,0,0" VerticalContentAlignment="Top" Padding="0,1,0,0" />
-        <Button x:Name="GetScoreButton2" IsDefault="True" Content="获取" HorizontalAlignment="Left" Margin="350,29,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="GetScoreButton_Click"/>
+        <Button x:Name="GetScoreButton2" IsDefault="True" Content="获取" HorizontalAlignment="Left" Margin="350,29,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="GetScoreButton2_Click"/>
         <ComboBox x:Name="LevelComboBox" Height="20" Margin="283,29,0,0" SelectedIndex="0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="64">
             <ComboBoxItem Content="expert"/>
             <ComboBoxItem Content="hard"/>

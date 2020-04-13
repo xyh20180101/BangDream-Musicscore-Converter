@@ -30,20 +30,18 @@ namespace GetScoreFromBestdori
 		/// <param name="e"></param>
 		private void GetScoreButton_Click(object sender, RoutedEventArgs e)
 		{
-			try
-			{
-				var a = LevelComboBox.Text;
-				var response = _httpClient.GetAsync($"{Url2}{IdTextBox2.Text}/{a}")
-					.Result;
-				var result = response.Content.ReadAsStringAsync().Result;
-				var jObject = JsonConvert.DeserializeObject<dynamic>(result);
-				ResultTextBox.Text = jObject.ToString();
-			}
-			catch (Exception exception)
-			{
-				MessageBox.Show(exception.Message);
-			}
-		}
+            try
+            {
+                var response = _httpClient.GetAsync(Url + IdTextBox.Text).Result;
+                var result = response.Content.ReadAsStringAsync().Result;
+                var jObject = JsonConvert.DeserializeObject<dynamic>(result);
+                ResultTextBox.Text = jObject.post.notes.ToString();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+        }
 
 		/// <summary>
 		///     获取按钮2
@@ -52,17 +50,19 @@ namespace GetScoreFromBestdori
 		/// <param name="e"></param>
 		private void GetScoreButton2_Click(object sender, RoutedEventArgs e)
 		{
-			try
-			{
-				var response = _httpClient.GetAsync(Url + IdTextBox2.Text).Result;
-				var result = response.Content.ReadAsStringAsync().Result;
-				var jObject = JsonConvert.DeserializeObject<dynamic>(result);
-				ResultTextBox.Text = jObject.post.notes.ToString();
-			}
-			catch (Exception exception)
-			{
-				MessageBox.Show(exception.Message);
-			}
+            try
+            {
+                var a = LevelComboBox.Text;
+                var response = _httpClient.GetAsync($"{Url2}{IdTextBox2.Text}/{a}")
+                    .Result;
+                var result = response.Content.ReadAsStringAsync().Result;
+                var jObject = JsonConvert.DeserializeObject<dynamic>(result);
+                ResultTextBox.Text = jObject.ToString();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
 		}
 
 		/// <summary>
